@@ -25,20 +25,13 @@ class CustomTooltip extends Component {
     render() {
         if (this.props.label === undefined || this.props.payload.length === 0) {
             return (
-                <div className="tooltip">
+                <div id="tooltip">
                     <p>Loading...</p>
                 </div>
             );
         }
 
         if ('names' in this.props) {
-            // const colours = {
-            //     All: 'hsl(120, 100%, 45%)',
-            //     Protoss: 'hsl(51, 100%, 50%)',
-            //     Terran: 'red',
-            //     Zerg: 'hsl(282, 100%, 30%)',
-            //     Random: 'hsl(198, 71%, 73%)',
-            // };
             const active = {
                 'all.value': false,
                 'protoss.value': false,
@@ -62,6 +55,21 @@ class CustomTooltip extends Component {
                     {this.props.names.map((name, index) => (
                         <p><span>{`${activePayload[index].value}%`}</span> of <span style={{ color: activePayload[index].color }}>{`${name}`}</span> players</p>
                     ))}
+                </div>
+            );
+        } else if (this.props.payload.length > 1) {
+            return (
+                <div id="tooltip">
+                    <ul>
+                        {this.props.payload.map(info => (
+                            <li>
+                                <svg height="10" width="10">
+                                    <circle cx="5" cy="5" r="5" fill={info.color} />
+                                </svg>
+                                &nbsp; {info.value}%
+                            </li>
+                        ))}
+                    </ul>
                 </div>
             );
         }
@@ -92,7 +100,9 @@ export default class App extends Component {
                 random: 0,
             }],
 
+            offraceRadarTotal: 0,
             active: 'mmr',
+            currentLeaguePie: 'all',
             currentLeague: 'all',
             allRace: 1,
             protoss: 0,
@@ -103,7 +113,7 @@ export default class App extends Component {
             strokeSize: {
                 all: 22,
                 grandmaster: 82,
-                masters: 33,
+                master: 33,
                 diamond: 39,
                 platinum: 48,
                 gold: 57,
@@ -124,53 +134,40 @@ export default class App extends Component {
 
     async parseFiles() {
         // console.log('parsing file');
-        const xmlhttp = new XMLHttpRequest();
+        const responses = [];
+        const files = [
+            'mmr-dist.json',
+            'games-played-dist.json',
+            'offrace-pie-dist.json',
+            'offrace-radar-dist.json',
+        ];
         let mmr;
         let activity;
         let offraceRadar;
         let offracePie;
 
-        xmlhttp.open('GET', 'mmr-dist.json', false);
-        xmlhttp.onload = () => {
-            if (xmlhttp.status === 200) {
-                mmr = JSON.parse(xmlhttp.responseText);
-                // console.log('read player-dist file');
-            }
+        const getFiles = (fileList) => {
+            files.forEach((file) => {
+                const xmlhttp = new XMLHttpRequest();
+                xmlhttp.open('GET', file, false);
+                xmlhttp.onload = () => {
+                    if (xmlhttp.status === 200) {
+                        const response = JSON.parse(xmlhttp.responseText);
+                        responses.push(response);
+                    }
+                };
+                xmlhttp.send();
+            });
         };
-        xmlhttp.send();
 
-        xmlhttp.open('GET', 'games-played-dist.json', false);
-        xmlhttp.onload = () => {
-            if (xmlhttp.status === 200) {
-                activity = JSON.parse(xmlhttp.responseText);
-                // console.log('read games-played-dist file');
-            }
-        };
-        xmlhttp.send();
-
-        xmlhttp.open('GET', 'offrace-pie-dist.json', false);
-        xmlhttp.onload = () => {
-            if (xmlhttp.status === 200) {
-                offracePie = JSON.parse(xmlhttp.responseText);
-                // console.log('read games-played-dist file');
-            }
-        };
-        xmlhttp.send();
-
-        xmlhttp.open('GET', 'offrace-radar-dist.json', false);
-        xmlhttp.onload = () => {
-            if (xmlhttp.status === 200) {
-                offraceRadar = JSON.parse(xmlhttp.responseText);
-                // console.log('read games-played-dist file');
-            }
-        };
-        xmlhttp.send();
+        await getFiles(files);
 
         await this.setState({
-            mmrData: mmr,
-            activityData: activity.data,
-            offracePieData: offracePie,
-            offraceRadarData: offraceRadar.data,
+            mmrData: responses[0],
+            activityData: responses[1].data,
+            offracePieData: responses[2],
+            offraceRadarData: responses[3].data,
+            offraceRadarTotal: responses[3].raw,
         }, () => {
             // console.log('file reads complete');
             // console.log(this.state.mmrData);
@@ -198,13 +195,20 @@ export default class App extends Component {
         });
     }
 
-    async changeLeague(selectedLeague) {
-        await this.setState({
-            // raceData: this.state.data,
-            currentLeague: selectedLeague,
-        }, () => {
-            // console.log('new league set');
-        });
+    async changeLeague(selectedLeague, type = null) {
+        if (type === 'pie') {
+            await this.setState({
+                currentLeaguePie: selectedLeague,
+            }, () => {
+                // console.log('new league set');
+            });
+        } else {
+            await this.setState({
+                currentLeague: selectedLeague,
+            }, () => {
+                // console.log('new league set');
+            });
+        }
     }
 
     render() {
@@ -229,6 +233,7 @@ export default class App extends Component {
             terran: ['protoss', 'zerg', 'random'],
             zerg: ['protoss', 'terran', 'random'],
         };
+
         const leagues = Object.keys(this.state.strokeSize).slice(1, -1);
         const colours = {
             allRace: 'hsl(120, 100%, 45%)',
@@ -251,18 +256,14 @@ export default class App extends Component {
         ];
 
         const ifActive = (line, type = null) => {
-            if (this.state.currentLeague === line) {
-                if (type === 'btn') {
-                    return 'active';
-                }
-                return '';
+            if (this.state.currentLeaguePie === line && type === 'pie') {
+                return 'active';
+            } else if (this.state.currentLeague === line && type === null) {
+                return 'active';
             } else if (this.state[line] === 1) {
-                if (type === 'btn') {
-                    return 'active';
-                }
-                return { stroke: 'transparent', r: 4 };
+                return 'active';
             } else if (this.state[line] === 0) {
-                return false;
+                return '';
             }
             return '';
         };
@@ -318,29 +319,29 @@ export default class App extends Component {
                         </ResponsiveContainer>
 
                         <div id="race" className="controls">
-                            <button onClick={() => this.changeRace('allRace')} className={`${ifActive('allRace', 'btn')}`}>
+                            <button onClick={() => this.changeRace('allRace')} className={`${ifActive('allRace')}`}>
                                 All
                             </button>
 
                             {races.map(race => (
-                                <button onClick={() => this.changeRace(race)} className={`${ifActive(race, 'btn')}`}>
+                                <button onClick={() => this.changeRace(race)} className={`${ifActive(race)}`}>
                                     {race.charAt(0).toUpperCase() + race.slice(1)}
                                 </button>
                             ))}
                         </div>
 
                         <div id="league" className="controls">
-                            <button onClick={() => this.changeLeague('all')} className={`first ${ifActive('all', 'btn')}`}>
+                            <button onClick={() => this.changeLeague('all')} className={`${ifActive('all')}`}>
                                 All
                             </button>
 
                             {leagues.map(league => (
-                                <button onClick={() => this.changeLeague(league)} className={`${ifActive(league, 'btn')}`}>
+                                <button onClick={() => this.changeLeague(league)} className={`${ifActive(league)}`}>
                                     {league.charAt(0).toUpperCase() + league.slice(1)}
                                 </button>
                             ))}
 
-                            <button onClick={() => this.changeLeague('bronze')} className={`last ${ifActive('bronze', 'btn')}`}>
+                            <button onClick={() => this.changeLeague('bronze')} className={`${ifActive('bronze')}`}>
                                 Bronze
                             </button>
                         </div>
@@ -365,7 +366,7 @@ export default class App extends Component {
                             />
                             <CartesianGrid horizontal={false} vertical={false} />
                             <Tooltip content={<CustomTooltip />} />
-                            <Area type="monotone" dataKey="proportion" stroke="hsl(120, 100%, 45%)" strokeWidth={2} fill="hsla(120, 100%, 55%, 0.35)" activeDot={{ stroke: 'black', strokeWidth: 3, r: 6 }} />
+                            <Area type="monotone" dataKey="proportion" stroke="hsl(120, 100%, 45%)" strokeWidth={1} fill="hsla(120, 100%, 55%, 0.3)" activeDot={{ stroke: 'black', strokeWidth: 3, r: 6 }} />
                         </AreaChart>
                     </ResponsiveContainer>
                 </section>
@@ -375,7 +376,7 @@ export default class App extends Component {
                 <h1>Off-Race Distribution</h1>
             );
 
-            const pieData = this.state.offracePieData.master;
+            const pieData = this.state.offracePieData[this.state.currentLeaguePie];
             const tooltipStyle = {
                 backgroundColor: 'none',
                 border: 'none',
@@ -385,24 +386,45 @@ export default class App extends Component {
 
             section = (
                 <section id="offrace">
+                    <div id="title">
+                        <h2>All Leagues</h2>
+                        <h2>League Breakdown</h2>
+                    </div>
                     <div id="radar">
                         <ResponsiveContainer width={600} height={500}>
                             <RadarChart outerRadius={200} data={this.state.offraceRadarData}>
                                 <PolarGrid stroke="hsl(0, 0%, 47%)" />
                                 <PolarAngleAxis dataKey="league" stroke="hsl(0, 0%, 47%)" dy={5} />
-                                <PolarRadiusAxis angle={90} domain={[0, 0.7]} dy={25} stroke="hsl(0, 0%, 47%)" />
+                                <PolarRadiusAxis angle={90} ticks={[10, 20, 30, 40, 50, 60, 70]} domain={[0, 10]} dx={4} dy={25} stroke="hsl(0, 0%, 47%)" />
                                 {races.map(race => (
                                     <Radar
                                         name={race.charAt(0).toUpperCase() + race.slice(1)}
                                         dataKey={race}
                                         stroke={colours[race]}
                                         fill={colours[race]}
-                                        fillOpacity={0.3}
+                                        fillOpacity={0.35}
+                                        dot={{ stroke: colours[race], fill: 'transparent' }}
+                                        activeDot={{
+                                            stroke: 'none',
+                                            strokeWidth: 1,
+                                            fill: colours[race],
+                                        }}
+                                        // activeDot={false}
                                     />
                                 ))}
-                                <Tooltip />
+                                <Tooltip
+                                    content={<CustomTooltip totalOffrace={this.state.offraceRadarTotal} />}
+                                    cursor={{ stroke: 'white', strokeWidth: 1.2 }}
+                                    position={{ x: 130, y: 450 }}
+                                />
                             </RadarChart>
                         </ResponsiveContainer>
+                        <p style={{ marginTop: 0, marginBottom: 5 }}>
+                            Total Players Off-Racing: {this.state.offraceRadarTotal.percentage}%
+                        </p>
+                        <p style={{ margin: 0 }}>
+                            <small>({this.state.offraceRadarTotal.fraction})</small>
+                        </p>
                     </div>
 
                     <div id="pie">
@@ -424,33 +446,139 @@ export default class App extends Component {
                                     <Tooltip
                                         contentStyle={tooltipStyle}
                                         itemStyle={{ color: 'hsl(0, 0%, 47%)', fontWeight: 400 }}
-                                        position={{ x: 44, y: 76.5 }}
+                                        position={{ x: 46, y: 77 }}
                                         isAnimationActive={false}
                                         separator=""
-                                        formatter={(value, name) => [value, '']}
+                                        formatter={(value, name) => [`${value}%`, '']}
                                     />
                                 </PieChart>
 
-                                <svg height="25" width="25">
-                                    <circle cx="12.5" cy="12.5" r="12.5" fill={colours[race]} />
+                                <svg height="20" width="20">
+                                    <circle cx="10" cy="10" r="10" fill={colours[race]} />
                                 </svg>
                             </div>
                         ))}
 
-                        <div id="league" className="controls">
-                            <button onClick={() => this.changeLeague('all')} className={`first ${ifActive('all', 'btn')}`}>
-                                All
-                            </button>
+                        <div id="league1">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <button
+                                            style={{
+                                                borderRadius: '15px 0 0 0',
+                                                borderTop: '1px solid white',
+                                                borderLeft: '1px solid white',
+                                            }}
+                                            onClick={() => this.changeLeague('all', 'pie')}
+                                            className={`${ifActive('all', 'pie')}`}
+                                        >
+                                            All
+                                        </button>
+                                    </td>
+                                    <td>
+                                        <button
+                                            style={{
+                                                borderRadius: '0 15px 0 0',
+                                                borderRight: '1px solid white',
+                                                borderTop: '1px solid white',
+                                            }}
+                                            onClick={() => this.changeLeague('grandmaster', 'pie')}
+                                            className={`${ifActive('grandmaster', 'pie')}`}
+                                        >
+                                            GM
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <button
+                                            style={{
+                                                borderRadius: '0 0 0 15px',
+                                                borderLeft: '1px solid white',
+                                                borderBottom: '1px solid white',
+                                            }}
+                                            onClick={() => this.changeLeague('master', 'pie')}
+                                            className={`${ifActive('master', 'pie')}`}
+                                        >
+                                            M
+                                        </button>
+                                    </td>
+                                    <td>
+                                        <button
+                                            style={{
+                                                borderRadius: '0 0 15px 0',
+                                                borderBottom: '1px solid white',
+                                                borderRight: '1px solid white',
+                                            }}
+                                            onClick={() => this.changeLeague('diamond', 'pie')}
+                                            className={`${ifActive('diamond', 'pie')}`}
+                                        >
+                                            D
+                                        </button>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
 
-                            {leagues.map(league => (
-                                <button onClick={() => this.changeLeague(league)} className={`${ifActive(league, 'btn')}`}>
-                                    {league.charAt(0).toUpperCase() + league.slice(1)}
-                                </button>
-                            ))}
-
-                            <button onClick={() => this.changeLeague('bronze')} className={`last ${ifActive('bronze', 'btn')}`}>
-                                Bronze
-                            </button>
+                        <div id="league2">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <button
+                                            style={{
+                                                borderRadius: '15px 0 0 0',
+                                                borderTop: '1px solid white',
+                                                borderLeft: '1px solid white',
+                                            }}
+                                            onClick={() => this.changeLeague('platinum', 'pie')}
+                                            className={`${ifActive('platinum', 'pie')}`}
+                                        >
+                                            P
+                                        </button>
+                                    </td>
+                                    <td>
+                                        <button
+                                            style={{
+                                                borderRadius: '0 15px 0 0',
+                                                borderRight: '1px solid white',
+                                                borderTop: '1px solid white',
+                                            }}
+                                            onClick={() => this.changeLeague('gold', 'pie')}
+                                            className={`${ifActive('gold', 'pie')}`}
+                                        >
+                                            G
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <button
+                                            style={{
+                                                borderRadius: '0 0 0 15px',
+                                                borderLeft: '1px solid white',
+                                                borderBottom: '1px solid white',
+                                            }}
+                                            onClick={() => this.changeLeague('silver', 'pie')}
+                                            className={`${ifActive('silver', 'pie')}`}
+                                        >
+                                            S
+                                        </button>
+                                    </td>
+                                    <td>
+                                        <button
+                                            style={{
+                                                borderRadius: '0 0 15px 0',
+                                                borderBottom: '1px solid white',
+                                                borderRight: '1px solid white',
+                                            }}
+                                            onClick={() => this.changeLeague('bronze', 'pie')}
+                                            className={`${ifActive('bronze', 'pie')}`}
+                                        >
+                                            B
+                                        </button>
+                                    </td>
+                                </tr>
+                            </table>
                         </div>
                     </div>
                 </section>
