@@ -17,7 +17,7 @@ body {
 header {
 	background-color: hsl(240, 80%, 5%);
 	height: 120px;
-	    grid-template-areas: 'title heading';
+	        grid-template-areas: 'title heading';
 	-ms-grid-columns: -webkit-max-content 1fr;
 	-ms-grid-columns: max-content 1fr;
 	grid-template-columns: -webkit-max-content 1fr;
@@ -133,10 +133,10 @@ h1, h2 {
 	grid-template-columns: 1fr -webkit-min-content;
 	grid-template-columns: 1fr min-content;
 	-ms-grid-rows: -webkit-max-content -webkit-max-content;
-	-ms-grid-rows: max-content max-content;
 	grid-template-rows: -webkit-max-content -webkit-max-content;
+	-ms-grid-rows: max-content max-content;
 	grid-template-rows: max-content max-content;
-	    grid-template-areas: 'chart race'
+	        grid-template-areas: 'chart race'
 			   			 'chart league';
 }
 
@@ -206,17 +206,27 @@ button:focus {
 
 #offrace {
 	margin-top: 60px;
+	display: -ms-grid;
 	display: grid;
-	grid-template: min-content 1fr / 1fr 1fr;
-	grid-template-areas: "title title"
+	-ms-grid-columns: 1fr 1fr;
+	    grid-template: -webkit-min-content 1fr / 1fr 1fr;
+	    grid-template: min-content 1fr / 1fr 1fr;
+	    grid-template-areas: "title title"
 						 "radar pie";
-	align-items: center;
+	-webkit-box-align: center;
+	    -ms-flex-align: center;
+	        align-items: center;
 }
 
 #offrace #title {
 	grid-area: title;
+	display: -ms-grid;
 	display: grid;
-	grid-template: min-content / 1fr 1fr;
+	-ms-grid-rows: -webkit-min-content;
+	-ms-grid-rows: min-content;
+	-ms-grid-columns: 1fr 1fr;
+	    grid-template: -webkit-min-content / 1fr 1fr;
+	    grid-template: min-content / 1fr 1fr;
 	justify-items: center;
 }
 
@@ -227,20 +237,28 @@ button:focus {
 
 #pie {
 	grid-area: pie;
-	justify-self: center;
+	-ms-grid-column-align: center;
+	    justify-self: center;
+	display: -ms-grid;
 	display: grid;
-	align-items: center;
+	-webkit-box-align: center;
+	    -ms-flex-align: center;
+	        align-items: center;
+	-ms-grid-rows: 1fr 10px 1fr;
 	grid-template-rows: 1fr 1fr;
+	-ms-grid-columns: 200px 20px 200px 20px 200px;
 	grid-template-columns: repeat(3, 200px);
 	grid-column-gap: 20px;
 	grid-row-gap: 10px;
-	grid-template-areas: "controls1 zerg random"
+	    grid-template-areas: "controls1 zerg random"
 						 "protoss terran controls2";
 }
 
 #radar {
 	margin: 0 auto;
 	grid-area: radar;
+	height: -webkit-max-content;
+	height: -moz-max-content;
 	height: max-content;
 	color: hsl(0, 0%, 47%);
 }
@@ -275,14 +293,20 @@ button:focus {
 
 #offrace #league1 {
 	grid-area: controls1;
+	width: -webkit-min-content;
+	width: -moz-min-content;
 	width: min-content;
-	justify-self: center;
+	-ms-grid-column-align: center;
+	    justify-self: center;
 }
 
 #offrace #league2 {
 	grid-area: controls2;
+	width: -webkit-min-content;
+	width: -moz-min-content;
 	width: min-content;
-	justify-self: center;
+	-ms-grid-column-align: center;
+	    justify-self: center;
 }
 
 
@@ -351,6 +375,8 @@ button:focus {
 }
 
 .recharts-sector {
+	-webkit-transition: fill-opacity 0.5s, fill 0.5s;
+	-o-transition: fill-opacity 0.5s, fill 0.5s;
 	transition: fill-opacity 0.5s, fill 0.5s;
 }
 
