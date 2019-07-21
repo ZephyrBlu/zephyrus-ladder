@@ -11,6 +11,8 @@ Users can select different races and leagues to view information about using the
 
 ## To Do
 
+- Fix floating footer on smaller screens
+
 - Refactor code from a single monolithic file to multiple, smaller component files
 
 - Aggregate JSON data in a single file to reduce the number of resource requests
