@@ -17,12 +17,12 @@ body {
 header {
 	background-color: hsl(240, 80%, 5%);
 	height: 120px;
-	        grid-template-areas: 'title heading';
+	grid-template-areas: 'title heading';
 	-ms-grid-columns: -webkit-max-content 1fr;
 	-ms-grid-columns: max-content 1fr;
 	grid-template-columns: -webkit-max-content 1fr;
 	grid-template-columns: max-content 1fr;
-	border-bottom: 1px solid white;
+	border-bottom: 1px solid hsl(0, 0%, 85%);
 }
 
 nav {
@@ -43,22 +43,22 @@ nav table {
 
 nav button {
 	background-color: hsl(240, 80%, 5%);
-	border: 1px solid white;
+	border: 1px solid hsl(0, 0%, 85%);
 	border-left: none;
 	border-right: none;
-	color: white;
+	color: hsl(0, 0%, 85%);
 	padding: 15px;
 }
 
 nav button:first-child {
 	border-radius: 25px 0 0 25px;
-	border-left: 1px solid white;
+	border-left: 1px solid hsl(0, 0%, 85%);
 	padding-left: 15px;
 }
 
 nav button:last-child {
 	border-radius: 0 25px 25px 0;
-	border-right: 1px solid white;
+	border-right: 1px solid hsl(0, 0%, 85%);
 	padding-right: 15px;
 }
 
@@ -72,13 +72,13 @@ h1 {
 	font-weight: normal;
 	margin: 0;
 	padding-top: 28px;
-	color: white;
+	color: hsl(0, 0%, 85%);
 }
 
 header h2 {
 	font-family: 'Major Mono Display', monospace;
 	margin: 0;
-	color: white;
+	color: hsl(0, 0%, 85%);
 	font-weight: 500;
 	position: absolute;
 	left: 6.25vw;
@@ -153,18 +153,18 @@ h1, h2 {
 
 .controls button {
 	width: 100%;
-	border-left: 1px solid white;
-	border-right: 1px solid white;
+	border-left: 1px solid hsl(0, 0%, 85%);
+	border-right: 1px solid hsl(0, 0%, 85%);
 }
 
 .controls button:first-child {
 	border-radius: 15px 15px 0 0;
-	border-top: 1px solid white;	
+	border-top: 1px solid hsl(0, 0%, 85%);	
 }
 
 .controls button:last-child {
 	border-radius: 0 0 15px 15px;
-	border-bottom: 1px solid white;
+	border-bottom: 1px solid hsl(0, 0%, 85%);
 }
 
 #race {
@@ -386,11 +386,11 @@ button:focus {
 
 footer {
 	background-color: hsl(240, 80%, 5%);
-	color: white;
+	color: hsl(0, 0%, 85%);
 	font-size: 14px;
 	width: 100%;
 	height: 60px;
-	border-top: 1px solid white;
+	border-top: 1px solid hsl(0, 0%, 85%);
 	position: absolute;
 	bottom: 0;
 }
