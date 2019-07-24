@@ -18,7 +18,7 @@ export default class MmrTab extends Component {
         this.state = {
             data: props.data,
             lineState: {
-                All: 0,
+                All: 1,
                 Protoss: 0,
                 Terran: 0,
                 Zerg: 0,
@@ -28,6 +28,29 @@ export default class MmrTab extends Component {
         };
 
         this.isLineActive = this.isLineActive.bind(this);
+        this.handleLeagueChange = this.handleLeagueChange.bind(this);
+        this.handleRaceSelect = this.handleRaceSelect.bind(this);
+    }
+
+    async handleLeagueChange(selectedLeague) {
+        await this.setState({
+            currentLeague: selectedLeague,
+        });
+    }
+
+    async handleRaceSelect(selectedRace) {
+        let lineState;
+        if (selectedRace) {
+            lineState = 0
+        } else {
+            lineState = 1
+        }
+
+        await this.setState({
+            lineState: {
+                [selectedRace]: lineState,
+            },
+        });
     }
 
     isLineActive(line, returnType = null) {
@@ -42,12 +65,6 @@ export default class MmrTab extends Component {
             return 0;
         }
         return '';
-    }
-
-    async changeLeague(selectedLeague) {
-        await this.setState({
-            currentLeague: selectedLeague,
-        });
     }
 
     render() {
@@ -146,9 +163,21 @@ export default class MmrTab extends Component {
                         </LineChart>
                     </ResponsiveContainer>
 
-                    <Controls chart="mmr" type="race" />
+                    <Controls
+                        chart="mmr"
+                        type="race"
+                        isLineActive={this.isLineActive}
+                        lineState={this.state.lineState}
+                        onRaceSelect={this.handleRaceSelect}
+                    />
 
-                    <Controls chart="mmr" type="league" />
+                    <Controls
+                        chart="mmr"
+                        type="league"
+                        isLineActive={this.isLineActive}
+                        lineState={this.state.lineState}
+                        onLeagueChange={this.handleLeagueChange}
+                    />
                 </div>
             </section>
         );

@@ -1,15 +1,22 @@
 import { Component, Fragment } from 'react';
 
 export default class Controls extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
 
-        this.changeLeague = this.changeLeague.bind(this);
-        this.isLineActive = this.props.
+        this.isLineActive = this.props.isLineActive.bind(this);
+        this.handleLeagueChange = this.handleLeagueChange.bind(this);
+        this.handleRaceSelect = this.handleRaceSelect.bind(this);
     }
 
-    changeLeague() {
+    // add logic for league change
+    handleLeagueChange(e) {
+        this.props.onLeagueChange(e.target.value);
+    }
 
+    // add logic for race selection
+    handleRaceSelect(e) {
+        this.props.onRaceSelect(e.target.value);
     }
 
     // this.props.id = '<id of div>'
@@ -33,12 +40,15 @@ export default class Controls extends Component {
             'Bronze',
         ];
 
+        const currentLeague = this.props.currentLeague;
+        const lineState = this.props.lineState;
+
         if (this.props.chart === 'mmr') {
             if (this.props.type === 'race') {
                 return (
                     <Fragment>
                         <button
-                            onClick={() => this.changeRace('allRace')}
+                            onClick={() => this.handleRaceSelect('allRace')}
                             className={`${ifActive('allRace', 'btn')}`}
                         >
                             All
@@ -46,7 +56,7 @@ export default class Controls extends Component {
 
                         {races.map(race => (
                             <button
-                                onClick={() => this.changeRace(race)}
+                                onClick={() => this.handleRaceSelect(race)}
                                 className={`${ifActive(race, 'btn')}`}
                             >
                                 {race}
@@ -59,7 +69,7 @@ export default class Controls extends Component {
             return (
                 <div id={this.props.id} className="controls">
                     <button
-                        onClick={() => this.changeLeague('all')}
+                        onClick={() => this.handleLeagueChange('all')}
                         className={`${ifActive('all')}`}
                     >
                         All
@@ -67,7 +77,7 @@ export default class Controls extends Component {
 
                     {leagues.map(league => (
                         <button
-                            onClick={() => this.changeLeague(league)}
+                            onClick={() => this.handleLeagueChange(league)}
                             className={`${ifActive(league)}`}
                         >
                             {league}
