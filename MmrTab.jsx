@@ -163,20 +163,19 @@ export default class MmrTab extends Component {
                         </LineChart>
                     </ResponsiveContainer>
 
-                    <Controls
+                    <RaceControls
+                        id="mmr"
                         chart="mmr"
-                        type="race"
                         isLineActive={this.isLineActive}
                         lineState={this.state.lineState}
                         onRaceSelect={this.handleRaceSelect}
                     />
 
-                    <Controls
+                    <LeagueControls
+                        id="league"
                         chart="mmr"
-                        type="league"
-                        isLineActive={this.isLineActive}
-                        lineState={this.state.lineState}
                         onLeagueChange={this.handleLeagueChange}
+                        currentLeague={this.state.currentLeague}
                     />
                 </div>
             </section>

@@ -1,16 +1,16 @@
 import { Component, Fragment } from 'react';
 
-export default class Controls extends Component {
+export default class LeagueControls extends Component {
     constructor(props) {
         super(props);
 
-        this.isLineActive = this.props.isLineActive.bind(this);
+        this.state = {
+            currentLeague: this.props.currentLeague,
+        };
+
         this.handleLeagueChange = this.handleLeagueChange.bind(this);
-        this.handleRaceSelect = this.handleRaceSelect.bind(this);
     }
 
-    // split Controls component into RaceControls + LeagueControls?
-    // good idea to separate state concerns
     // add support for direction prop: horizontal or vertical
 
     // add logic for league change
@@ -18,22 +18,16 @@ export default class Controls extends Component {
         this.props.onLeagueChange(e.target.value);
     }
 
-    // add logic for race selection
-    handleRaceSelect(e) {
-        this.props.onRaceSelect(e.target.value);
+    isLeagueActive(league) {
+        if (this.state.currentLeague === league) {
+            return 'active';
+        }
+        return '';
     }
 
     // this.props.id = '<id of div>'
     // this.props.chart = '<pie, mmr, activity>'
-    // this.props.type = '<race, league>'
     render() {
-        const races = [
-            'Protoss',
-            'Terran',
-            'Zerg',
-            'Random',
-        ];
-
         const leagues = [
             'Grandmaster',
             'Master',
@@ -45,36 +39,13 @@ export default class Controls extends Component {
         ];
 
         const currentLeague = this.props.currentLeague;
-        const lineState = this.props.lineState;
 
         if (this.props.chart === 'mmr') {
-            if (this.props.type === 'race') {
-                return (
-                    <Fragment>
-                        <button
-                            onClick={() => this.handleRaceSelect('allRace')}
-                            className={`${ifActive('allRace', 'btn')}`}
-                        >
-                            All
-                        </button>
-
-                        {races.map(race => (
-                            <button
-                                onClick={() => this.handleRaceSelect(race)}
-                                className={`${ifActive(race, 'btn')}`}
-                            >
-                                {race}
-                            </button>
-                        ))}
-                    </Fragment>
-                );
-            }
-
             return (
                 <div id={this.props.id} className="controls">
                     <button
                         onClick={() => this.handleLeagueChange('all')}
-                        className={`${ifActive('all')}`}
+                        className={`${isLeagueActive('all')}`}
                     >
                         All
                     </button>
@@ -82,7 +53,7 @@ export default class Controls extends Component {
                     {leagues.map(league => (
                         <button
                             onClick={() => this.handleLeagueChange(league)}
-                            className={`${ifActive(league)}`}
+                            className={`${isLeagueActive(league)}`}
                         >
                             {league}
                         </button>
@@ -92,7 +63,7 @@ export default class Controls extends Component {
         }
 
         return (
-            <div id="pie">
+            <div id={this.props.id}>
                 <div id="league1">
                     <table>
                         <tr>
@@ -104,7 +75,7 @@ export default class Controls extends Component {
                                         borderLeft: '1px solid white',
                                     }}
                                     onClick={() => this.changeLeague('all', 'pie')}
-                                    className={`${ifActive('all', 'pie')}`}
+                                    className={`${isLeagueActive('all', 'pie')}`}
                                 >
                                     All
                                 </button>
@@ -117,7 +88,7 @@ export default class Controls extends Component {
                                         borderTop: '1px solid white',
                                     }}
                                     onClick={() => this.changeLeague('grandmaster', 'pie')}
-                                    className={`${ifActive('grandmaster', 'pie')}`}
+                                    className={`${isLeagueActive('grandmaster', 'pie')}`}
                                 >
                                     GM
                                 </button>
@@ -132,7 +103,7 @@ export default class Controls extends Component {
                                         borderBottom: '1px solid white',
                                     }}
                                     onClick={() => this.changeLeague('master', 'pie')}
-                                    className={`${ifActive('master', 'pie')}`}
+                                    className={`${isLeagueActive('master', 'pie')}`}
                                 >
                                     M
                                 </button>
@@ -145,7 +116,7 @@ export default class Controls extends Component {
                                         borderRight: '1px solid white',
                                     }}
                                     onClick={() => this.changeLeague('diamond', 'pie')}
-                                    className={`${ifActive('diamond', 'pie')}`}
+                                    className={`${isLeagueActive('diamond', 'pie')}`}
                                 >
                                     D
                                 </button>
@@ -165,7 +136,7 @@ export default class Controls extends Component {
                                         borderLeft: '1px solid white',
                                     }}
                                     onClick={() => this.changeLeague('platinum', 'pie')}
-                                    className={`${ifActive('platinum', 'pie')}`}
+                                    className={`${isLeagueActive('platinum', 'pie')}`}
                                 >
                                     P
                                 </button>
@@ -178,7 +149,7 @@ export default class Controls extends Component {
                                         borderTop: '1px solid white',
                                     }}
                                     onClick={() => this.changeLeague('gold', 'pie')}
-                                    className={`${ifActive('gold', 'pie')}`}
+                                    className={`${isLeagueActive('gold', 'pie')}`}
                                 >
                                     G
                                 </button>
@@ -193,7 +164,7 @@ export default class Controls extends Component {
                                         borderBottom: '1px solid white',
                                     }}
                                     onClick={() => this.changeLeague('silver', 'pie')}
-                                    className={`${ifActive('silver', 'pie')}`}
+                                    className={`${isLeagueActive('silver', 'pie')}`}
                                 >
                                     S
                                 </button>
@@ -206,7 +177,7 @@ export default class Controls extends Component {
                                         borderRight: '1px solid white',
                                     }}
                                     onClick={() => this.changeLeague('bronze', 'pie')}
-                                    className={`${ifActive('bronze', 'pie')}`}
+                                    className={`${isLeagueActive('bronze', 'pie')}`}
                                 >
                                     B
                                 </button>
