@@ -13,22 +13,30 @@ import LeagueControls from './Components/Controls/LeagueControls';
 import CustomTooltip from './Components/Tooltip';
 
 export default class MmrTab extends Component {
+    static defaultProps = {
+        data: {
+            all: [
+                { all: { value: 0 }, bin: 0 },
+            ],
+        },
+        lineState: {
+            All: 1,
+            Protoss: 0,
+            Terran: 0,
+            Zerg: 0,
+            Random: 0,
+        },
+        currentLeague: 'All',
+    }
+
     constructor(props) {
         super(props);
 
         this.state = {
-            data: props.data,
-            lineState: {
-                All: 1,
-                Protoss: 0,
-                Terran: 0,
-                Zerg: 0,
-                Random: 0,
-            },
-            currentLeague: 'all',
+            lineState: props.lineState,
+            currentLeague: props.currentLeague,
         };
 
-        this.isLineActive = this.isLineActive.bind(this);
         this.handleLeagueChange = this.handleLeagueChange.bind(this);
         this.handleRaceSelect = this.handleRaceSelect.bind(this);
     }
@@ -36,73 +44,56 @@ export default class MmrTab extends Component {
     async handleLeagueChange(selectedLeague) {
         await this.setState({
             currentLeague: selectedLeague,
+        }, () => {
+            console.log(`currentLeague, ${this.state.currentLeague}`);
         });
     }
 
     async handleRaceSelect(selectedRace) {
-        let lineState;
-        if (selectedRace) {
-            lineState = 0;
+        let state;
+        if (this.state.lineState[selectedRace]) {
+            state = 0;
         } else {
-            lineState = 1;
+            state = 1;
         }
 
-        await this.setState({
+        await this.setState(prevState => ({
             lineState: {
-                [selectedRace]: lineState,
+                ...prevState.lineState,
+                [selectedRace]: state,
             },
+        }), () => {
+            console.log(Object.keys(this.state.lineState));
+            Object.keys(this.state.lineState).forEach((line) => {
+                console.log(`lineState, ${line}: ${this.state.lineState[line]}`);
+            });
         });
     }
 
-    isLineActive(line, returnType = null) {
-        if (this.state.lineState[line]) {
-            switch (returnType) {
-                case 'bool':
-                    return true;
-
-                case 'num':
-                    return 1;
-
-                default:
-                    return 'active';
-            }
-        }
-
-        switch (returnType) {
-            case 'bool':
-                return false;
-
-            case 'num':
-                return 0;
-
-            default:
-                return '';
-        }
-    }
-
     render() {
+        console.log(this.props.data[this.props.currentLeague.toLowerCase()]);
         const baseLineStyle = {
             opacity: null,
             transition: 'opacity 0.8s',
         };
 
         const strokeSize = {
-            all: 22,
-            grandmaster: 82,
-            master: 33,
-            diamond: 39,
-            platinum: 48,
-            gold: 57,
-            silver: 49,
-            bronze: 58,
+            All: 22,
+            Grandmaster: 82,
+            Master: 33,
+            Diamond: 39,
+            Platinum: 48,
+            Gold: 57,
+            Silver: 49,
+            Bronze: 58,
         };
 
         const colours = {
-            allRace: 'hsl(120, 100%, 45%)',
-            protoss: 'hsl(51, 100%, 50%)',
-            random: 'hsl(198, 71%, 73%)',
-            terran: 'red',
-            zerg: 'hsl(282, 100%, 30%)',
+            All: 'hsl(120, 100%, 45%)',
+            Protoss: 'hsl(51, 100%, 50%)',
+            Random: 'hsl(198, 71%, 73%)',
+            Terran: 'red',
+            Zerg: 'hsl(282, 100%, 30%)',
         };
 
         const races = [
@@ -119,10 +110,40 @@ export default class MmrTab extends Component {
             return lineStyle;
         };
 
+        const isLineActive = (line, returnType = null) => {
+            if (this.state.lineState[line]) {
+                switch (returnType) {
+                    case 'bool':
+                        return true;
+
+                    case 'num':
+                        return 1;
+
+                    case 'style':
+                        return { stroke: colours[line] };
+
+                    default:
+                        return 'active';
+                }
+            }
+
+            switch (returnType) {
+                case 'style':
+                case 'bool':
+                    return false;
+
+                case 'num':
+                    return 0;
+
+                default:
+                    return '';
+            }
+        };
+
         const getActiveLines = () => {
             const active = [];
-            Object.keys(this.state.lineState).forEach((line) => {
-                if (this.isLineActive(line, 'bool')) {
+            Object.keys(this.props.lineState).forEach((line) => {
+                if (isLineActive(line, 'bool')) {
                     active.push(line);
                 }
             });
@@ -133,7 +154,7 @@ export default class MmrTab extends Component {
             <section id="mmr">
                 <div id="chart">
                     <ResponsiveContainer width="99%" height={640}>
-                        <LineChart data={this.state.data[this.state.currentLeague]}>
+                        <LineChart data={this.props.data[this.state.currentLeague.toLowerCase()]}>
                             <XAxis
                                 stroke="hsl(0, 0%, 47%)"
                                 dataKey="bin"
@@ -162,15 +183,16 @@ export default class MmrTab extends Component {
                                 }}
                             />
 
-                            {races.map(race => (
+                            {races.map((race, index) => (
                                 <Line
+                                    key={index}
                                     type="monotone"
-                                    dataKey={`${race}.value`}
+                                    dataKey={`${race.toLowerCase()}.value`}
                                     stroke={colours[race]}
                                     strokeWidth={2}
                                     style={createStyle(race)}
                                     dot={false}
-                                    activeDot={this.isLineActive(race, 'bool')}
+                                    activeDot={isLineActive(race, 'style')}
                                 />
                             ))}
                         </LineChart>
@@ -179,7 +201,7 @@ export default class MmrTab extends Component {
                     <RaceControls
                         id="race"
                         chart="mmr"
-                        isLineActive={this.isLineActive}
+                        isLineActive={isLineActive}
                         lineState={this.state.lineState}
                         onRaceSelect={this.handleRaceSelect}
                     />
@@ -195,5 +217,3 @@ export default class MmrTab extends Component {
         );
     }
 }
-
-MmrTab.defaultProps = {};

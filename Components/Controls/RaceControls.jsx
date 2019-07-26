@@ -1,51 +1,55 @@
 import { Component, Fragment } from 'react';
 
 export default class RaceControls extends Component {
+    static defaultProps = {
+        isLineActive: () => {},
+        lineState: {
+            All: 1,
+            Protoss: 0,
+            Terran: 0,
+            Zerg: 0,
+            Random: 0,
+        },
+    }
+
     constructor(props) {
         super(props);
 
-        this.isLineActive = this.props.isLineActive.bind(this);
+        this.isLineActive = props.isLineActive.bind(this);
         this.handleRaceSelect = this.handleRaceSelect.bind(this);
     }
 
     // add support for direction prop: horizontal or vertical
 
     // add logic for race selection
-    handleRaceSelect(e) {
-        this.props.onRaceSelect(e.target.value);
+    handleRaceSelect(selectedRace) {
+        this.props.onRaceSelect(selectedRace);
     }
 
     // this.props.id = '<id of div>'
     // this.props.chart = '<pie, mmr, activity>'
     render() {
         const races = [
+            'All',
             'Protoss',
             'Terran',
             'Zerg',
             'Random',
         ];
 
-        const lineState = this.props.lineState;
-
         if (this.props.chart === 'mmr') {
             return (
-                <Fragment>
-                    <button
-                        onClick={() => this.handleRaceSelect('allRace')}
-                        className={`${isLineActive('allRace', 'btn')}`}
-                    >
-                        All
-                    </button>
-
-                    {races.map(race => (
+                <div id="race" className="controls">
+                    {races.map((race, index) => (
                         <button
+                            key={index}
                             onClick={() => this.handleRaceSelect(race)}
-                            className={`${isLineActive(race, 'btn')}`}
+                            className={`${this.isLineActive(race)}`}
                         >
                             {race}
                         </button>
                     ))}
-                </Fragment>
+                </div>
             );
         }
 
@@ -62,7 +66,7 @@ export default class RaceControls extends Component {
                                         borderLeft: '1px solid white',
                                     }}
                                     onClick={() => this.changeLeague('all', 'pie')}
-                                    className={`${isLineActive('all', 'pie')}`}
+                                    className={`${this.isLineActive('all', 'pie')}`}
                                 >
                                     All
                                 </button>
@@ -75,7 +79,7 @@ export default class RaceControls extends Component {
                                         borderTop: '1px solid white',
                                     }}
                                     onClick={() => this.changeLeague('grandmaster', 'pie')}
-                                    className={`${isLineActive('grandmaster', 'pie')}`}
+                                    className={`${this.isLineActive('grandmaster', 'pie')}`}
                                 >
                                     GM
                                 </button>
@@ -90,7 +94,7 @@ export default class RaceControls extends Component {
                                         borderBottom: '1px solid white',
                                     }}
                                     onClick={() => this.changeLeague('master', 'pie')}
-                                    className={`${isLineActive('master', 'pie')}`}
+                                    className={`${this.isLineActive('master', 'pie')}`}
                                 >
                                     M
                                 </button>
@@ -103,7 +107,7 @@ export default class RaceControls extends Component {
                                         borderRight: '1px solid white',
                                     }}
                                     onClick={() => this.changeLeague('diamond', 'pie')}
-                                    className={`${isLineActive('diamond', 'pie')}`}
+                                    className={`${this.isLineActive('diamond', 'pie')}`}
                                 >
                                     D
                                 </button>
@@ -123,7 +127,7 @@ export default class RaceControls extends Component {
                                         borderLeft: '1px solid white',
                                     }}
                                     onClick={() => this.changeLeague('platinum', 'pie')}
-                                    className={`${isLineActive('platinum', 'pie')}`}
+                                    className={`${this.isLineActive('platinum', 'pie')}`}
                                 >
                                     P
                                 </button>
@@ -136,7 +140,7 @@ export default class RaceControls extends Component {
                                         borderTop: '1px solid white',
                                     }}
                                     onClick={() => this.changeLeague('gold', 'pie')}
-                                    className={`${isLineActive('gold', 'pie')}`}
+                                    className={`${this.isLineActive('gold', 'pie')}`}
                                 >
                                     G
                                 </button>
@@ -151,7 +155,7 @@ export default class RaceControls extends Component {
                                         borderBottom: '1px solid white',
                                     }}
                                     onClick={() => this.changeLeague('silver', 'pie')}
-                                    className={`${isLineActive('silver', 'pie')}`}
+                                    className={`${this.isLineActive('silver', 'pie')}`}
                                 >
                                     S
                                 </button>
@@ -164,7 +168,7 @@ export default class RaceControls extends Component {
                                         borderRight: '1px solid white',
                                     }}
                                     onClick={() => this.changeLeague('bronze', 'pie')}
-                                    className={`${isLineActive('bronze', 'pie')}`}
+                                    className={`${this.isLineActive('bronze', 'pie')}`}
                                 >
                                     B
                                 </button>

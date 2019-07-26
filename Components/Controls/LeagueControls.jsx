@@ -1,25 +1,27 @@
 import { Component, Fragment } from 'react';
 
 export default class LeagueControls extends Component {
+    static defaultProps = {
+        isLeagueActive: () => {},
+        currentLeague: 'All',
+    }
+
     constructor(props) {
         super(props);
 
-        this.state = {
-            currentLeague: this.props.currentLeague,
-        };
-
+        this.isLeagueActive = this.isLeagueActive.bind(this);
         this.handleLeagueChange = this.handleLeagueChange.bind(this);
     }
 
     // add support for direction prop: horizontal or vertical
 
     // add logic for league change
-    handleLeagueChange(e) {
-        this.props.onLeagueChange(e.target.value);
+    handleLeagueChange(selectedLeague) {
+        this.props.onLeagueChange(selectedLeague);
     }
 
     isLeagueActive(league) {
-        if (this.state.currentLeague === league) {
+        if (this.props.currentLeague === league) {
             return 'active';
         }
         return '';
@@ -29,6 +31,7 @@ export default class LeagueControls extends Component {
     // this.props.chart = '<pie, mmr, activity>'
     render() {
         const leagues = [
+            'All',
             'Grandmaster',
             'Master',
             'Diamond',
@@ -38,22 +41,14 @@ export default class LeagueControls extends Component {
             'Bronze',
         ];
 
-        const currentLeague = this.props.currentLeague;
-
         if (this.props.chart === 'mmr') {
             return (
-                <div id={this.props.id} className="controls">
-                    <button
-                        onClick={() => this.handleLeagueChange('all')}
-                        className={`${isLeagueActive('all')}`}
-                    >
-                        All
-                    </button>
-
-                    {leagues.map(league => (
+                <div id="league" className="controls">
+                    {leagues.map((league, index) => (
                         <button
+                            key={index}
                             onClick={() => this.handleLeagueChange(league)}
-                            className={`${isLeagueActive(league)}`}
+                            className={`${this.isLeagueActive(league)}`}
                         >
                             {league}
                         </button>
@@ -63,7 +58,7 @@ export default class LeagueControls extends Component {
         }
 
         return (
-            <div id={this.props.id}>
+            <div id="league" className="controls">
                 <div id="league1">
                     <table>
                         <tr>
@@ -75,7 +70,7 @@ export default class LeagueControls extends Component {
                                         borderLeft: '1px solid white',
                                     }}
                                     onClick={() => this.changeLeague('all', 'pie')}
-                                    className={`${isLeagueActive('all', 'pie')}`}
+                                    className={`${this.isLeagueActive('all', 'pie')}`}
                                 >
                                     All
                                 </button>
@@ -88,7 +83,7 @@ export default class LeagueControls extends Component {
                                         borderTop: '1px solid white',
                                     }}
                                     onClick={() => this.changeLeague('grandmaster', 'pie')}
-                                    className={`${isLeagueActive('grandmaster', 'pie')}`}
+                                    className={`${this.isLeagueActive('grandmaster', 'pie')}`}
                                 >
                                     GM
                                 </button>
@@ -103,7 +98,7 @@ export default class LeagueControls extends Component {
                                         borderBottom: '1px solid white',
                                     }}
                                     onClick={() => this.changeLeague('master', 'pie')}
-                                    className={`${isLeagueActive('master', 'pie')}`}
+                                    className={`${this.isLeagueActive('master', 'pie')}`}
                                 >
                                     M
                                 </button>
@@ -116,7 +111,7 @@ export default class LeagueControls extends Component {
                                         borderRight: '1px solid white',
                                     }}
                                     onClick={() => this.changeLeague('diamond', 'pie')}
-                                    className={`${isLeagueActive('diamond', 'pie')}`}
+                                    className={`${this.isLeagueActive('diamond', 'pie')}`}
                                 >
                                     D
                                 </button>
@@ -136,7 +131,7 @@ export default class LeagueControls extends Component {
                                         borderLeft: '1px solid white',
                                     }}
                                     onClick={() => this.changeLeague('platinum', 'pie')}
-                                    className={`${isLeagueActive('platinum', 'pie')}`}
+                                    className={`${this.isLeagueActive('platinum', 'pie')}`}
                                 >
                                     P
                                 </button>
@@ -149,7 +144,7 @@ export default class LeagueControls extends Component {
                                         borderTop: '1px solid white',
                                     }}
                                     onClick={() => this.changeLeague('gold', 'pie')}
-                                    className={`${isLeagueActive('gold', 'pie')}`}
+                                    className={`${this.isLeagueActive('gold', 'pie')}`}
                                 >
                                     G
                                 </button>
@@ -164,7 +159,7 @@ export default class LeagueControls extends Component {
                                         borderBottom: '1px solid white',
                                     }}
                                     onClick={() => this.changeLeague('silver', 'pie')}
-                                    className={`${isLeagueActive('silver', 'pie')}`}
+                                    className={`${this.isLeagueActive('silver', 'pie')}`}
                                 >
                                     S
                                 </button>
@@ -177,7 +172,7 @@ export default class LeagueControls extends Component {
                                         borderRight: '1px solid white',
                                     }}
                                     onClick={() => this.changeLeague('bronze', 'pie')}
-                                    className={`${isLeagueActive('bronze', 'pie')}`}
+                                    className={`${this.isLeagueActive('bronze', 'pie')}`}
                                 >
                                     B
                                 </button>

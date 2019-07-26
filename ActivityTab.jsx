@@ -1,6 +1,4 @@
 import { Component } from 'react';
-import Controls from './Components/Controls';
-import CustomTooltip from './Components/Tooltip';
 import {
     ResponsiveContainer,
     AreaChart,
@@ -10,6 +8,7 @@ import {
     CartesianGrid,
     Tooltip,
 } from 'recharts';
+import CustomTooltip from './Components/Tooltip';
 
 export default class ActivityTab extends Component {
     constructor(props) {
@@ -21,8 +20,9 @@ export default class ActivityTab extends Component {
     }
 
     render() {
-        const ticks = [0, 5, 10, 15, 20, 25, 50,
-            75, 100, 150, 200, 300, 400, 573,
+        const ticks = [
+            0, 5, 10, 15, 20, 25, 50, 75,
+            100, 150, 200, 300, 400, 573,
         ];
 
         return (
@@ -31,10 +31,10 @@ export default class ActivityTab extends Component {
                     <AreaChart data={this.state.data}>
                         <XAxis
                             stroke="hsl(0, 0%, 47%)"
-                            label={{ 
+                            label={{
                                 value: 'Games Played',
                                 dy: 14,
-                                fill: 'hsl(0, 0%, 47%)'
+                                fill: 'hsl(0, 0%, 47%)',
                             }}
                             dataKey="games"
                             ticks={ticks}
@@ -43,7 +43,8 @@ export default class ActivityTab extends Component {
                             stroke="hsl(0, 0%, 47%)"
                             label={{
                                 value: 'Percentage of Population (%)',
-                                angle: -90, dx: -10,
+                                angle: -90,
+                                dx: -10,
                                 fill: 'hsl(0, 0%, 47%)',
                             }}
                         />
@@ -60,6 +61,8 @@ export default class ActivityTab extends Component {
                     </AreaChart>
                 </ResponsiveContainer>
             </section>
-        );  
+        );
     }
 }
+
+ActivityTab.defaultProps = {};

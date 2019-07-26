@@ -2,6 +2,7 @@ import { Component, Fragment } from 'react';
 import MmrTab from './MmrTab';
 import ActivityTab from './ActivityTab';
 // import OffraceTab from './OffraceTab';
+import './App.css';
 
 export default class App extends Component {
     constructor() {
@@ -9,7 +10,29 @@ export default class App extends Component {
 
         this.state = {
             activeTab: 'mmr',
-            data: {},
+            data: {
+                mmr: {
+                    all: [
+                        { all: { value: 0 }, bin: 0 },
+                    ],
+                },
+                activity: [{ games: 0, proportion: 0 }],
+                offrace: [{
+                    league: 'grandmaster',
+                    protoss: 0,
+                    zerg: 0,
+                    terran: 0,
+                    random: 0,
+                }],
+            },
+            lineState: {
+                All: 1,
+                Protoss: 0,
+                Terran: 0,
+                Zerg: 0,
+                Random: 0,
+            },
+            currentLeague: 'all',
         };
 
         this.changeTab = this.changeTab.bind(this);
@@ -24,12 +47,13 @@ export default class App extends Component {
     async getFiles() {
         const xmlhttp = new XMLHttpRequest();
         let response;
+
+        xmlhttp.open('GET', 'data.json', false);
         xmlhttp.onload = () => {
             if (xmlhttp.status === 200) {
                 response = JSON.parse(xmlhttp.responseText);
             }
         };
-        await xmlhttp.open('GET', 'data.json');
         xmlhttp.send();
 
         await this.setState({
@@ -58,17 +82,29 @@ export default class App extends Component {
         let section;
         switch (this.state.activeTab) {
             case 'mmr':
-                title = 'MMR';
-                section = (<MmrTab data={this.state.data.mmr} />);
+                title = (<h1>MMR Distribution</h1>);
+                section = (
+                    <MmrTab
+                        data={this.state.data.mmr}
+                        lineState={this.state.lineState}
+                        currentLeague={this.state.currentLeague}
+                    />
+                );
                 break;
 
             case 'activity':
-                title = 'Activity';
-                section = (<ActivityTab data={this.state.data.activity} />);
+                title = (<h1>Population Activity</h1>);
+                section = (
+                    <ActivityTab
+                        data={this.state.data.activity}
+                        lineState={this.state.lineState}
+                        currentLeague={this.state.currentLeague}
+                    />
+                );
                 break;
 
                 // case 'offrace':
-                //     title = 'Off-Race';
+                //     title = (<h1>Off-Race Distribution</h1>);
                 //     section = (<OffraceTab data={this.state.data.offrace} />);
                 //     break;
             default:
@@ -84,19 +120,19 @@ export default class App extends Component {
                     <nav>
                         <button
                             onClick={() => this.changeTab('mmr')}
-                            className={`${this.isActive('mmr')}`}
+                            className={`${this.isTabActive('mmr')}`}
                         >
                             MMR
                         </button>
                         <button
                             onClick={() => this.changeTab('activity')}
-                            className={`${this.isActive('activity')}`}
+                            className={`${this.isTabActive('activity')}`}
                         >
                             Activity
                         </button>
                         <button
                             onClick={() => this.changeTab('offrace')}
-                            className={`${this.isActive('offrace')}`}
+                            className={`${this.isTabActive('offrace')}`}
                         >
                             Off-Racing
                         </button>
