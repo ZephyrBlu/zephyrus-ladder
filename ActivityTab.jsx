@@ -11,12 +11,8 @@ import {
 import CustomTooltip from './Components/Tooltip';
 
 export default class ActivityTab extends Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            data: props.data,
-        };
+    static defaultProps = {
+        data: [{ games: 0, proportion: 0 }],
     }
 
     render() {
@@ -25,10 +21,12 @@ export default class ActivityTab extends Component {
             100, 150, 200, 300, 400, 573,
         ];
 
+        console.log(this.props.data);
+
         return (
             <section id="activity">
                 <ResponsiveContainer width="100%" height={640}>
-                    <AreaChart data={this.state.data}>
+                    <AreaChart data={this.props.data}>
                         <XAxis
                             stroke="hsl(0, 0%, 47%)"
                             label={{
@@ -56,7 +54,7 @@ export default class ActivityTab extends Component {
                             stroke="hsl(120, 100%, 45%)"
                             strokeWidth={1}
                             fill="hsla(120, 100%, 55%, 0.3)"
-                            activeDot={{ stroke: 'black', strokeWidth: 3, r: 6 }}
+                            activeDot={{ stroke: 'hsl(120, 100%, 45%)', r: 5 }}
                         />
                     </AreaChart>
                 </ResponsiveContainer>
@@ -64,5 +62,3 @@ export default class ActivityTab extends Component {
         );
     }
 }
-
-ActivityTab.defaultProps = {};
