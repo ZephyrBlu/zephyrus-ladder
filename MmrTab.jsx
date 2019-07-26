@@ -8,7 +8,8 @@ import {
     CartesianGrid,
     Tooltip,
 } from 'recharts';
-import Controls from './Components/Controls';
+import RaceControls from './Components/Controls/RaceControls';
+import LeagueControls from './Components/Controls/LeagueControls';
 import CustomTooltip from './Components/Tooltip';
 
 export default class MmrTab extends Component {
@@ -41,9 +42,9 @@ export default class MmrTab extends Component {
     async handleRaceSelect(selectedRace) {
         let lineState;
         if (selectedRace) {
-            lineState = 0
+            lineState = 0;
         } else {
-            lineState = 1
+            lineState = 1;
         }
 
         await this.setState({
@@ -55,16 +56,28 @@ export default class MmrTab extends Component {
 
     isLineActive(line, returnType = null) {
         if (this.state.lineState[line]) {
-            if (returnType === 'bool') {
-                return 1;
+            switch (returnType) {
+                case 'bool':
+                    return true;
+
+                case 'num':
+                    return 1;
+
+                default:
+                    return 'active';
             }
-            return 'active';
         }
 
-        if (returnType === 'bool') {
-            return 0;
+        switch (returnType) {
+            case 'bool':
+                return false;
+
+            case 'num':
+                return 0;
+
+            default:
+                return '';
         }
-        return '';
     }
 
     render() {
@@ -157,14 +170,14 @@ export default class MmrTab extends Component {
                                     strokeWidth={2}
                                     style={createStyle(race)}
                                     dot={false}
-                                    activeDot={this.isLineActive(race)}
+                                    activeDot={this.isLineActive(race, 'bool')}
                                 />
                             ))}
                         </LineChart>
                     </ResponsiveContainer>
 
                     <RaceControls
-                        id="mmr"
+                        id="race"
                         chart="mmr"
                         isLineActive={this.isLineActive}
                         lineState={this.state.lineState}
@@ -182,3 +195,5 @@ export default class MmrTab extends Component {
         );
     }
 }
+
+MmrTab.defaultProps = {};
