@@ -42,6 +42,7 @@ export default class LeagueControls extends Component {
         ];
 
         if (this.props.chart === 'mmr') {
+            console.log(this.props.currentLeague);
             return (
                 <div id="league" className="controls">
                     {leagues.map((league, index) => (

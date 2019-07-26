@@ -32,7 +32,7 @@ export default class App extends Component {
                 Zerg: 0,
                 Random: 0,
             },
-            currentLeague: 'all',
+            currentLeague: 'All',
         };
 
         this.changeTab = this.changeTab.bind(this);
