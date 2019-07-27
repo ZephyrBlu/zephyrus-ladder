@@ -11,6 +11,8 @@ Users can select different races and leagues to view information about using the
 
 ## To Do
 
+- Refactor CSS into individual files
+
 - Fix floating footer on smaller screens
 
 - Alter UI in Off-Race tab to convey meaning more effectively
