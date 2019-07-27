@@ -74,15 +74,11 @@ export default class OffraceTab extends Component {
             Zerg: 'hsl(282, 100%, 50%)',
         };
 
-        const races = [
-            'All',
-            'Protoss',
-            'Terran',
-            'Zerg',
-            'Random',
-        ];
+        const races = ['All', 'Protoss', 'Terran', 'Zerg', 'Random'];
 
         const sortedRaces = ['Protoss', 'Random', 'Terran', 'Zerg'];
+
+        const radarRaces = ['Random', 'Zerg', 'Protoss', 'Terran'];
 
         const pieRaces = {
             Protoss: ['Zerg', 'Terran', 'Random'],
@@ -124,7 +120,7 @@ export default class OffraceTab extends Component {
                                 dy={25}
                                 stroke="hsl(0, 0%, 47%)"
                             />
-                            {races.map((race, index) => (
+                            {radarRaces.map((race, index) => (
                                 <Radar
                                     key={`radar-${index}`}
                                     name={race}
@@ -161,7 +157,7 @@ export default class OffraceTab extends Component {
 
                 <div id="pie">
                     {sortedRaces.map((race, index) => (
-                        <div key={`pie-wrapper-${index}`} id={`${race}`} className="pie-chart">
+                        <div key={`pie-wrapper-${index}`} id={`${race.toLowerCase()}`} className="pie-chart">
                             <PieChart width={200} height={200}>
                                 <Pie
                                     key={`pie-${index}`}

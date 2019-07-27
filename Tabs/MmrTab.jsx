@@ -86,13 +86,7 @@ export default class MmrTab extends Component {
             Zerg: 'hsl(282, 100%, 30%)',
         };
 
-        const races = [
-            'All',
-            'Protoss',
-            'Terran',
-            'Zerg',
-            'Random',
-        ];
+        const races = ['All', 'Protoss', 'Terran', 'Zerg', 'Random'];
 
         const createStyle = (line) => {
             const lineStyle = Object.assign({}, baseLineStyle);
