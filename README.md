@@ -11,12 +11,8 @@ Users can select different races and leagues to view information about using the
 
 ## To Do
 
+- Refactor CSS into individual files
+
 - Fix floating footer on smaller screens
-
-- Refactor code from a single monolithic file to multiple, smaller component files
-
-- Aggregate JSON data in a single file to reduce the number of resource requests
-
-- Refactor XHR's for resources to work asynchronously to improve load time and time to first meaningful/contentful paint
 
 - Alter UI in Off-Race tab to convey meaning more effectively
