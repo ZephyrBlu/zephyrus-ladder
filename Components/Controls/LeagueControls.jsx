@@ -13,9 +13,6 @@ export default class LeagueControls extends Component {
         this.handleLeagueChange = this.handleLeagueChange.bind(this);
     }
 
-    // add support for direction prop: horizontal or vertical
-
-    // add logic for league change
     handleLeagueChange(selectedLeague) {
         this.props.onLeagueChange(selectedLeague);
     }
@@ -27,8 +24,6 @@ export default class LeagueControls extends Component {
         return '';
     }
 
-    // this.props.id = '<id of div>'
-    // this.props.chart = '<pie, mmr, activity>'
     render() {
         const leagues = [
             'All',
@@ -42,7 +37,6 @@ export default class LeagueControls extends Component {
         ];
 
         if (this.props.chart === 'mmr') {
-            console.log(this.props.currentLeague);
             return (
                 <div id="league" className="controls">
                     {leagues.map((league, index) => (

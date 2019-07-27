@@ -1,7 +1,7 @@
 import { Component, Fragment } from 'react';
 import MmrTab from './MmrTab';
 import ActivityTab from './ActivityTab';
-// import OffraceTab from './OffraceTab';
+import OffraceTab from './OffraceTab';
 import './App.css';
 
 export default class App extends Component {
@@ -17,22 +17,17 @@ export default class App extends Component {
                     ],
                 },
                 activity: [{ games: 0, proportion: 0 }],
-                offrace: [{
-                    league: 'grandmaster',
-                    protoss: 0,
-                    zerg: 0,
-                    terran: 0,
-                    random: 0,
-                }],
+                offrace: {
+                    pie: { grandmaster: [{ name: 'Loading', value: 0 }] },
+                    radar: [{
+                        league: 'grandmaster',
+                        protoss: 0,
+                        zerg: 0,
+                        terran: 0,
+                        random: 0,
+                    }],
+                },
             },
-            lineState: {
-                All: 1,
-                Protoss: 0,
-                Terran: 0,
-                Zerg: 0,
-                Random: 0,
-            },
-            currentLeague: 'All',
         };
 
         this.changeTab = this.changeTab.bind(this);
@@ -86,8 +81,6 @@ export default class App extends Component {
                 section = (
                     <MmrTab
                         data={this.state.data.mmr}
-                        lineState={this.state.lineState}
-                        currentLeague={this.state.currentLeague}
                     />
                 );
                 break;
@@ -97,16 +90,19 @@ export default class App extends Component {
                 section = (
                     <ActivityTab
                         data={this.state.data.activity}
-                        lineState={this.state.lineState}
-                        currentLeague={this.state.currentLeague}
                     />
                 );
                 break;
 
-                // case 'offrace':
-                //     title = (<h1>Off-Race Distribution</h1>);
-                //     section = (<OffraceTab data={this.state.data.offrace} />);
-                //     break;
+            case 'offrace':
+                title = (<h1>Off-Race Distribution</h1>);
+                section = (
+                    <OffraceTab
+                        data={this.state.data.offrace}
+                    />
+                );
+                break;
+
             default:
                 break;
         }

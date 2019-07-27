@@ -1,6 +1,4 @@
 import { Component } from 'react';
-import Controls from './Components/Controls';
-import CustomTooltip from './Components/Tooltip';
 import {
     PieChart,
     Pie,
@@ -13,9 +11,96 @@ import {
     ResponsiveContainer,
     Tooltip,
 } from 'recharts';
+import CustomTooltip from './Components/Tooltip';
 
 export default class OffraceTab extends Component {
+    static defaultProps = {
+        data: {
+            pie: { grandmaster: [{ name: 'Loading', value: 0 }] },
+            radar: {
+                data: [{
+                    league: 'grandmaster',
+                    protoss: 0,
+                    zerg: 0,
+                    terran: 0,
+                    random: 0,
+                }],
+                raw: {
+                    percentage: '0%',
+                    fraction: '0/0',
+                },
+            },
+        },
+    }
+
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            currentLeague: 'All',
+        };
+
+        this.isLeagueActive = this.isLeagueActive.bind(this);
+        this.changeLeague = this.changeLeague.bind(this);
+    }
+
+    async changeLeague(selectedLeague) {
+        await this.setState({
+            currentLeague: selectedLeague,
+        });
+    }
+
+    isLeagueActive(league) {
+        if (this.state.currentLeague === league) {
+            return 'active';
+        }
+        return '';
+    }
+
     render() {
+        const colours = {
+            All: 'hsl(120, 100%, 45%)',
+            Protoss: 'hsl(51, 100%, 50%)',
+            Random: 'hsl(198, 71%, 73%)',
+            Terran: 'red',
+            Zerg: 'hsl(282, 100%, 30%)',
+        };
+
+        const coloursLight = {
+            All: 'hsl(120, 100%, 65%)',
+            Protoss: 'hsl(51, 100%, 70%)',
+            Random: 'hsl(198, 71%, 93%)',
+            Terran: 'hsl(0, 100%, 70%)',
+            Zerg: 'hsl(282, 100%, 50%)',
+        };
+
+        const races = [
+            'All',
+            'Protoss',
+            'Terran',
+            'Zerg',
+            'Random',
+        ];
+
+        const sortedRaces = ['Protoss', 'Random', 'Terran', 'Zerg'];
+
+        const pieRaces = {
+            Protoss: ['Zerg', 'Terran', 'Random'],
+            Random: ['Protoss', 'Zerg', 'Terran'],
+            Terran: ['Protoss', 'Zerg', 'Random'],
+            Zerg: ['Protoss', 'Terran', 'Random'],
+        };
+
+        const tooltipStyle = {
+            backgroundColor: 'none',
+            border: 'none',
+            width: 90,
+            height: 25,
+            whiteSpace: 'pre-line',
+        };
+
+        const data = this.props.data.pie[this.state.currentLeague.toLowerCase()];
+
         return (
             <section id="offrace">
                 <div id="title">
@@ -24,7 +109,7 @@ export default class OffraceTab extends Component {
                 </div>
                 <div id="radar">
                     <ResponsiveContainer width={600} height={500}>
-                        <RadarChart outerRadius={200} data={this.state.offraceRadarData}>
+                        <RadarChart outerRadius={200} data={this.props.data.radar.data}>
                             <PolarGrid stroke="hsl(0, 0%, 47%)" />
                             <PolarAngleAxis
                                 dataKey="league"
@@ -35,14 +120,15 @@ export default class OffraceTab extends Component {
                                 angle={90}
                                 ticks={[10, 20, 30, 40, 50, 60, 70]}
                                 domain={[0, 10]}
-                                dx={4} 
+                                dx={4}
                                 dy={25}
                                 stroke="hsl(0, 0%, 47%)"
                             />
-                            {races.map(race => (
+                            {races.map((race, index) => (
                                 <Radar
-                                    name={race.charAt(0).toUpperCase() + race.slice(1)}
-                                    dataKey={race}
+                                    key={index}
+                                    name={race}
+                                    dataKey={race.toLowerCase()}
                                     stroke={colours[race]}
                                     fill={colours[race]}
                                     fillOpacity={0.35}
@@ -57,7 +143,7 @@ export default class OffraceTab extends Component {
                             <Tooltip
                                 content={
                                     <CustomTooltip
-                                        totalOffrace={this.state.offraceRadarTotal}
+                                        chart="radar"
                                     />
                                 }
                                 cursor={{ stroke: 'white', strokeWidth: 1.2 }}
@@ -66,19 +152,21 @@ export default class OffraceTab extends Component {
                         </RadarChart>
                     </ResponsiveContainer>
                     <p style={{ marginTop: 0, marginBottom: 5 }}>
-                        Total Players Off-Racing: {this.state.offraceRadarTotal.percentage}%
+                        Total Players Off-Racing: {this.props.data.radar.raw.percentage}%
                     </p>
                     <p style={{ margin: 0 }}>
-                        <small>({this.state.offraceRadarTotal.fraction})</small>
+                        <small>({this.props.data.radar.raw.fraction})</small>
                     </p>
                 </div>
 
                 <div id="pie">
-                    {sortedRaces.map(race => (
-                        <div id={`${race}`} className="pie-chart">
+                    {sortedRaces.map((race, index) => (
+                        <div key={index + 100} id={`${race}`} className="pie-chart">
                             <PieChart width={200} height={200}>
                                 <Pie
-                                    data={pieData[race]}
+                                    key={index + 10}
+                                    data={data[race.toLowerCase()]}
+                                    dataKey="value"
                                     cx="50%"
                                     cy="50%"
                                     outerRadius={90}
@@ -86,7 +174,13 @@ export default class OffraceTab extends Component {
                                     paddingAngle={0}
                                 >
                                     {pieRaces[race].map(raceCell => (
-                                        <Cell stroke={colours[raceCell]} strokeWidth={1} fill={coloursLight[raceCell]} fillOpacity={0.2} />
+                                        <Cell
+                                            key={index}
+                                            stroke={colours[raceCell]}
+                                            strokeWidth={1}
+                                            fill={coloursLight[raceCell]}
+                                            fillOpacity={0.2}
+                                        />
                                     ))}
                                 </Pie>
 
@@ -97,7 +191,7 @@ export default class OffraceTab extends Component {
                                     isAnimationActive={false}
                                     separator=""
                                     formatter={(value, name) => [
-                                        `${value}% of ${race} Off-Race as ${name}`, '',
+                                        `${value}%`, '', //  of ${race} Off-Race as ${name}
                                     ]}
                                 />
 
@@ -111,127 +205,131 @@ export default class OffraceTab extends Component {
 
                     <div id="league1">
                         <table>
-                            <tr>
-                                <td>
-                                    <button
-                                        style={{
-                                            borderRadius: '15px 0 0 0',
-                                            borderTop: '1px solid white',
-                                            borderLeft: '1px solid white',
-                                        }}
-                                        onClick={() => this.changeLeague('all', 'pie')}
-                                        className={`${ifActive('all', 'pie')}`}
-                                    >
-                                        All
-                                    </button>
-                                </td>
-                                <td>
-                                    <button
-                                        style={{
-                                            borderRadius: '0 15px 0 0',
-                                            borderRight: '1px solid white',
-                                            borderTop: '1px solid white',
-                                        }}
-                                        onClick={() => this.changeLeague('grandmaster', 'pie')}
-                                        className={`${ifActive('grandmaster', 'pie')}`}
-                                    >
-                                        GM
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <button
-                                        style={{
-                                            borderRadius: '0 0 0 15px',
-                                            borderLeft: '1px solid white',
-                                            borderBottom: '1px solid white',
-                                        }}
-                                        onClick={() => this.changeLeague('master', 'pie')}
-                                        className={`${ifActive('master', 'pie')}`}
-                                    >
-                                        M
-                                    </button>
-                                </td>
-                                <td>
-                                    <button
-                                        style={{
-                                            borderRadius: '0 0 15px 0',
-                                            borderBottom: '1px solid white',
-                                            borderRight: '1px solid white',
-                                        }}
-                                        onClick={() => this.changeLeague('diamond', 'pie')}
-                                        className={`${ifActive('diamond', 'pie')}`}
-                                    >
-                                        D
-                                    </button>
-                                </td>
-                            </tr>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <button
+                                            style={{
+                                                borderRadius: '15px 0 0 0',
+                                                borderTop: '1px solid white',
+                                                borderLeft: '1px solid white',
+                                            }}
+                                            onClick={() => this.changeLeague('All')}
+                                            className={`${this.isLeagueActive('All')}`}
+                                        >
+                                            All
+                                        </button>
+                                    </td>
+                                    <td>
+                                        <button
+                                            style={{
+                                                borderRadius: '0 15px 0 0',
+                                                borderRight: '1px solid white',
+                                                borderTop: '1px solid white',
+                                            }}
+                                            onClick={() => this.changeLeague('Grandmaster')}
+                                            className={`${this.isLeagueActive('Grandmaster')}`}
+                                        >
+                                            GM
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <button
+                                            style={{
+                                                borderRadius: '0 0 0 15px',
+                                                borderLeft: '1px solid white',
+                                                borderBottom: '1px solid white',
+                                            }}
+                                            onClick={() => this.changeLeague('Master')}
+                                            className={`${this.isLeagueActive('Master')}`}
+                                        >
+                                            M
+                                        </button>
+                                    </td>
+                                    <td>
+                                        <button
+                                            style={{
+                                                borderRadius: '0 0 15px 0',
+                                                borderBottom: '1px solid white',
+                                                borderRight: '1px solid white',
+                                            }}
+                                            onClick={() => this.changeLeague('Diamond')}
+                                            className={`${this.isLeagueActive('Diamond')}`}
+                                        >
+                                            D
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
                         </table>
                     </div>
 
                     <div id="league2">
                         <table>
-                            <tr>
-                                <td>
-                                    <button
-                                        style={{
-                                            borderRadius: '15px 0 0 0',
-                                            borderTop: '1px solid white',
-                                            borderLeft: '1px solid white',
-                                        }}
-                                        onClick={() => this.changeLeague('platinum', 'pie')}
-                                        className={`${ifActive('platinum', 'pie')}`}
-                                    >
-                                        P
-                                    </button>
-                                </td>
-                                <td>
-                                    <button
-                                        style={{
-                                            borderRadius: '0 15px 0 0',
-                                            borderRight: '1px solid white',
-                                            borderTop: '1px solid white',
-                                        }}
-                                        onClick={() => this.changeLeague('gold', 'pie')}
-                                        className={`${ifActive('gold', 'pie')}`}
-                                    >
-                                        G
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <button
-                                        style={{
-                                            borderRadius: '0 0 0 15px',
-                                            borderLeft: '1px solid white',
-                                            borderBottom: '1px solid white',
-                                        }}
-                                        onClick={() => this.changeLeague('silver', 'pie')}
-                                        className={`${ifActive('silver', 'pie')}`}
-                                    >
-                                        S
-                                    </button>
-                                </td>
-                                <td>
-                                    <button
-                                        style={{
-                                            borderRadius: '0 0 15px 0',
-                                            borderBottom: '1px solid white',
-                                            borderRight: '1px solid white',
-                                        }}
-                                        onClick={() => this.changeLeague('bronze', 'pie')}
-                                        className={`${ifActive('bronze', 'pie')}`}
-                                    >
-                                        B
-                                    </button>
-                                </td>
-                            </tr>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <button
+                                            style={{
+                                                borderRadius: '15px 0 0 0',
+                                                borderTop: '1px solid white',
+                                                borderLeft: '1px solid white',
+                                            }}
+                                            onClick={() => this.changeLeague('Platinum')}
+                                            className={`${this.isLeagueActive('Platinum')}`}
+                                        >
+                                            P
+                                        </button>
+                                    </td>
+                                    <td>
+                                        <button
+                                            style={{
+                                                borderRadius: '0 15px 0 0',
+                                                borderRight: '1px solid white',
+                                                borderTop: '1px solid white',
+                                            }}
+                                            onClick={() => this.changeLeague('Gold')}
+                                            className={`${this.isLeagueActive('Gold')}`}
+                                        >
+                                            G
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <button
+                                            style={{
+                                                borderRadius: '0 0 0 15px',
+                                                borderLeft: '1px solid white',
+                                                borderBottom: '1px solid white',
+                                            }}
+                                            onClick={() => this.changeLeague('Silver')}
+                                            className={`${this.isLeagueActive('Silver')}`}
+                                        >
+                                            S
+                                        </button>
+                                    </td>
+                                    <td>
+                                        <button
+                                            style={{
+                                                borderRadius: '0 0 15px 0',
+                                                borderBottom: '1px solid white',
+                                                borderRight: '1px solid white',
+                                            }}
+                                            onClick={() => this.changeLeague('Bronze')}
+                                            className={`${this.isLeagueActive('Bronze')}`}
+                                        >
+                                            B
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
                         </table>
                     </div>
                 </div>
             </section>
-        );  
+        );
     }
 }

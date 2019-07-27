@@ -60,7 +60,7 @@ export default class CustomTooltip extends Component {
                     );
                     break;
 
-                case 'pie':
+                case 'radar':
                     content = (
                         <Fragment>
                             <ul>
@@ -90,5 +90,3 @@ export default class CustomTooltip extends Component {
         );
     }
 }
-
-CustomTooltip.defaultProps = {};

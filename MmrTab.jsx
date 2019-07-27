@@ -19,22 +19,20 @@ export default class MmrTab extends Component {
                 { all: { value: 0 }, bin: 0 },
             ],
         },
-        lineState: {
-            All: 1,
-            Protoss: 0,
-            Terran: 0,
-            Zerg: 0,
-            Random: 0,
-        },
-        currentLeague: 'All',
     }
 
     constructor(props) {
         super(props);
 
         this.state = {
-            lineState: props.lineState,
-            currentLeague: props.currentLeague,
+            lineState: {
+                All: 1,
+                Protoss: 0,
+                Terran: 0,
+                Zerg: 0,
+                Random: 0,
+            },
+            currentLeague: 'All',
         };
 
         this.handleLeagueChange = this.handleLeagueChange.bind(this);
@@ -44,8 +42,6 @@ export default class MmrTab extends Component {
     async handleLeagueChange(selectedLeague) {
         await this.setState({
             currentLeague: selectedLeague,
-        }, () => {
-            console.log(`currentLeague, ${this.state.currentLeague}`);
         });
     }
 
@@ -62,16 +58,10 @@ export default class MmrTab extends Component {
                 ...prevState.lineState,
                 [selectedRace]: state,
             },
-        }), () => {
-            console.log(Object.keys(this.state.lineState));
-            Object.keys(this.state.lineState).forEach((line) => {
-                console.log(`lineState, ${line}: ${this.state.lineState[line]}`);
-            });
-        });
+        }));
     }
 
     render() {
-        console.log(this.props.data[this.props.currentLeague.toLowerCase()]);
         const baseLineStyle = {
             opacity: null,
             transition: 'opacity 0.8s',
@@ -142,7 +132,7 @@ export default class MmrTab extends Component {
 
         const getActiveLines = () => {
             const active = [];
-            Object.keys(this.props.lineState).forEach((line) => {
+            Object.keys(this.state.lineState).forEach((line) => {
                 if (isLineActive(line, 'bool')) {
                     active.push(line);
                 }

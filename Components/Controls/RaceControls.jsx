@@ -19,15 +19,10 @@ export default class RaceControls extends Component {
         this.handleRaceSelect = this.handleRaceSelect.bind(this);
     }
 
-    // add support for direction prop: horizontal or vertical
-
-    // add logic for race selection
     handleRaceSelect(selectedRace) {
         this.props.onRaceSelect(selectedRace);
     }
 
-    // this.props.id = '<id of div>'
-    // this.props.chart = '<pie, mmr, activity>'
     render() {
         const races = [
             'All',

@@ -21,8 +21,6 @@ export default class ActivityTab extends Component {
             100, 150, 200, 300, 400, 573,
         ];
 
-        console.log(this.props.data);
-
         return (
             <section id="activity">
                 <ResponsiveContainer width="100%" height={640}>
