@@ -52,9 +52,6 @@ export default class App extends Component {
         xmlhttp.send();
 
         await this.setState({
-            // make sure data in json file is
-            // in correct format to allow
-            // reducing to data: response
             data: response,
         });
     }

@@ -126,7 +126,7 @@ export default class OffraceTab extends Component {
                             />
                             {races.map((race, index) => (
                                 <Radar
-                                    key={index}
+                                    key={`radar-${index}`}
                                     name={race}
                                     dataKey={race.toLowerCase()}
                                     stroke={colours[race]}
@@ -161,10 +161,10 @@ export default class OffraceTab extends Component {
 
                 <div id="pie">
                     {sortedRaces.map((race, index) => (
-                        <div key={index + 100} id={`${race}`} className="pie-chart">
+                        <div key={`pie-wrapper-${index}`} id={`${race}`} className="pie-chart">
                             <PieChart width={200} height={200}>
                                 <Pie
-                                    key={index + 10}
+                                    key={`pie-${index}`}
                                     data={data[race.toLowerCase()]}
                                     dataKey="value"
                                     cx="50%"
@@ -175,7 +175,7 @@ export default class OffraceTab extends Component {
                                 >
                                     {pieRaces[race].map(raceCell => (
                                         <Cell
-                                            key={index}
+                                            key={`cell-${index}`}
                                             stroke={colours[raceCell]}
                                             strokeWidth={1}
                                             fill={coloursLight[raceCell]}

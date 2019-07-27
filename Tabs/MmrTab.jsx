@@ -175,7 +175,7 @@ export default class MmrTab extends Component {
 
                             {races.map((race, index) => (
                                 <Line
-                                    key={index}
+                                    key={`line-${index}`}
                                     type="monotone"
                                     dataKey={`${race.toLowerCase()}.value`}
                                     stroke={colours[race]}
