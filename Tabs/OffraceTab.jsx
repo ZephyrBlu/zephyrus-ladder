@@ -11,7 +11,7 @@ import {
     ResponsiveContainer,
     Tooltip,
 } from 'recharts';
-import CustomTooltip from './Components/Tooltip';
+import CustomTooltip from '../Components/Tooltip';
 
 export default class OffraceTab extends Component {
     static defaultProps = {

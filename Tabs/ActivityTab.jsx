@@ -8,7 +8,7 @@ import {
     CartesianGrid,
     Tooltip,
 } from 'recharts';
-import CustomTooltip from './Components/Tooltip';
+import CustomTooltip from '../Components/Tooltip';
 
 export default class ActivityTab extends Component {
     static defaultProps = {

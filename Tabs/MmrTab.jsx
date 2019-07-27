@@ -8,9 +8,9 @@ import {
     CartesianGrid,
     Tooltip,
 } from 'recharts';
-import RaceControls from './Components/Controls/RaceControls';
-import LeagueControls from './Components/Controls/LeagueControls';
-import CustomTooltip from './Components/Tooltip';
+import RaceControls from '../Components/Controls/RaceControls';
+import LeagueControls from '../Components/Controls/LeagueControls';
+import CustomTooltip from '../Components/Tooltip';
 
 export default class MmrTab extends Component {
     static defaultProps = {

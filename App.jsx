@@ -1,7 +1,7 @@
 import { Component, Fragment } from 'react';
-import MmrTab from './MmrTab';
-import ActivityTab from './ActivityTab';
-import OffraceTab from './OffraceTab';
+import MmrTab from './Tabs/MmrTab';
+import ActivityTab from './Tabs/ActivityTab';
+import OffraceTab from './Tabs/OffraceTab';
 import './App.css';
 
 export default class App extends Component {
