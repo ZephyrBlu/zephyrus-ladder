@@ -1,13 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto:400|Raleway:400|Major+Mono+Display&display=swap');
 
-#tooltip {
-    border-radius: 10px;
-    padding: 2px 16px;
-    background-color: hsla(0, 0%, 0%, 0.8);
-    color: hsl(0, 0%, 85%);
-    border: 1px solid hsl(0, 0%, 85%);
-}
-
 body {
     margin: 0;
     font-family: 'Roboto', sans-serif;
@@ -106,11 +98,6 @@ section {
     margin-left: 60px;
 }
 
-#mmr h5 {
-    margin: 0;
-    font-size: 16px;
-}
-
 hr {
     width: 60%;
 }
@@ -123,60 +110,11 @@ h1, h2 {
     display: inline-block;
 }
 
-#chart {
-    width: 100%;
-    display: -ms-grid;
-    display: grid;
-    grid-column-gap: 40px;
-    -ms-grid-columns: 1fr 40px -webkit-min-content;
-    -ms-grid-columns: 1fr 40px min-content;
-    grid-template-columns: 1fr -webkit-min-content;
-    grid-template-columns: 1fr min-content;
-    -ms-grid-rows: -webkit-max-content -webkit-max-content;
-    grid-template-rows: -webkit-max-content -webkit-max-content;
-    -ms-grid-rows: max-content max-content;
-    grid-template-rows: max-content max-content;
-            grid-template-areas: 'chart race'
-                         'chart league';
-}
-
 .recharts-responsive-container {
   -ms-grid-row: 1;
   -ms-grid-row-span: 2;
   -ms-grid-column: 1;
   grid-area: chart;
-}
-
-.controls {
-    margin-top: 20px;
-}
-
-.controls button {
-    width: 100%;
-    border-left: 1px solid hsl(0, 0%, 85%);
-    border-right: 1px solid hsl(0, 0%, 85%);
-}
-
-.controls button:first-child {
-    border-radius: 15px 15px 0 0;
-    border-top: 1px solid hsl(0, 0%, 85%);  
-}
-
-.controls button:last-child {
-    border-radius: 0 0 15px 15px;
-    border-bottom: 1px solid hsl(0, 0%, 85%);
-}
-
-#race {
-    -ms-grid-row: 1;
-    -ms-grid-column: 3;
-    grid-area: race;
-}
-
-#league {
-    -ms-grid-row: 2;
-    -ms-grid-column: 3;
-    grid-area: league;
 }
 
 button {
@@ -202,186 +140,6 @@ button:focus {
 
 .active {
     background-color: hsl(0, 0%, 85%);
-}
-
-#offrace {
-    margin-top: 60px;
-    display: -ms-grid;
-    display: grid;
-    -ms-grid-columns: 1fr 1fr;
-        grid-template: -webkit-min-content 1fr / 1fr 1fr;
-        grid-template: min-content 1fr / 1fr 1fr;
-        grid-template-areas: "title title"
-                         "radar pie";
-    -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
-}
-
-#offrace #title {
-    grid-area: title;
-    display: -ms-grid;
-    display: grid;
-    -ms-grid-rows: -webkit-min-content;
-    -ms-grid-rows: min-content;
-    -ms-grid-columns: 1fr 1fr;
-        grid-template: -webkit-min-content / 1fr 1fr;
-        grid-template: min-content / 1fr 1fr;
-    justify-items: center;
-}
-
-#offrace h2 {
-    color: hsl(0, 0%, 85%);
-    font-weight: 400;
-}
-
-#pie {
-    grid-area: pie;
-    -ms-grid-column-align: center;
-        justify-self: center;
-    display: -ms-grid;
-    display: grid;
-    -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
-    -ms-grid-rows: 1fr 10px 1fr;
-    grid-template-rows: 1fr 1fr;
-    -ms-grid-columns: 200px 20px 200px 20px 200px;
-    grid-template-columns: repeat(3, 200px);
-    grid-column-gap: 20px;
-    grid-row-gap: 10px;
-        grid-template-areas: "controls1 zerg random"
-                         "protoss terran controls2";
-}
-
-#radar {
-    margin: 0 auto;
-    grid-area: radar;
-    height: -webkit-max-content;
-    height: -moz-max-content;
-    height: max-content;
-    color: hsl(0, 0%, 47%);
-}
-
-#radar #tooltip {
-    background-color: transparent;
-    color: hsl(0, 0%, 47%);
-    border: none;
-}
-
-#radar ul {
-    padding: 0;
-}
-
-#radar li {
-    display: inline;
-    padding: 0 10px;
-}
-
-#offrace table {
-    border-collapse: collapse;
-}
-
-#offrace td {
-    padding: 0;
-}
-
-#offrace button {
-    width: 40px;
-    height: 40px;
-}
-
-#offrace #league1 {
-    grid-area: controls1;
-    width: -webkit-min-content;
-    width: -moz-min-content;
-    width: min-content;
-    -ms-grid-column-align: center;
-        justify-self: center;
-}
-
-#offrace #league2 {
-    grid-area: controls2;
-    width: -webkit-min-content;
-    width: -moz-min-content;
-    width: min-content;
-    -ms-grid-column-align: center;
-        justify-self: center;
-}
-
-
-#protoss {
-    grid-area: protoss;
-}
-
-#protoss .recharts-layer.recharts-pie .recharts-layer:nth-child(1) .recharts-sector:hover {
-    fill: hsl(282, 100%, 30%);
-}
-
-#protoss .recharts-layer.recharts-pie .recharts-layer:nth-child(2) .recharts-sector:hover {
-    fill: red;
-}
-
-#protoss .recharts-layer.recharts-pie .recharts-layer:nth-child(3) .recharts-sector:hover {
-    fill: hsl(198, 71%, 73%);
-}
-
-#terran {
-    grid-area: terran;
-}
-
-#terran .recharts-layer.recharts-pie .recharts-layer:nth-child(1) .recharts-sector:hover {
-    fill: hsl(51, 100%, 50%);
-}
-
-#terran .recharts-layer.recharts-pie .recharts-layer:nth-child(2) .recharts-sector:hover {
-    fill: hsl(282, 100%, 30%);
-}
-
-#terran .recharts-layer.recharts-pie .recharts-layer:nth-child(3) .recharts-sector:hover {
-    fill: hsl(198, 71%, 73%);
-}
-
-#zerg {
-    grid-area: zerg;
-}
-
-#zerg .recharts-layer.recharts-pie .recharts-layer:nth-child(1) .recharts-sector:hover {
-    fill: hsl(51, 100%, 50%);
-}
-
-#zerg .recharts-layer.recharts-pie .recharts-layer:nth-child(2) .recharts-sector:hover {
-    fill: red;
-}
-
-#zerg .recharts-layer.recharts-pie .recharts-layer:nth-child(3) .recharts-sector:hover {
-    fill: hsl(198, 71%, 73%);
-}
-
-#random {
-    grid-area: random;
-}
-
-#random .recharts-layer.recharts-pie .recharts-layer:nth-child(1) .recharts-sector:hover {
-    fill: hsl(51, 100%, 50%);
-}
-
-#random .recharts-layer.recharts-pie .recharts-layer:nth-child(2) .recharts-sector:hover {
-    fill: hsl(282, 100%, 30%);
-}
-
-#random .recharts-layer.recharts-pie .recharts-layer:nth-child(3) .recharts-sector:hover {
-    fill: red;
-}
-
-.recharts-sector {
-    -webkit-transition: fill-opacity 0.5s, fill 0.5s;
-    -o-transition: fill-opacity 0.5s, fill 0.5s;
-    transition: fill-opacity 0.5s, fill 0.5s;
-}
-
-.recharts-sector:hover {
-    fill-opacity: 1;
 }
 
 footer {

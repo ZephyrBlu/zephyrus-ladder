@@ -1,4 +1,5 @@
 import { Component, Fragment } from 'react';
+import './Tooltip.css';
 
 export default class CustomTooltip extends Component {
     render() {

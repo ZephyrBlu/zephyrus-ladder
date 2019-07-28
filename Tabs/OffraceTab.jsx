@@ -12,6 +12,9 @@ import {
     Tooltip,
 } from 'recharts';
 import CustomTooltip from '../Components/Tooltip';
+import './OffraceTab.css';
+import './OffraceTab-Radar.css';
+import './OffraceTab-Pie.css';
 
 export default class OffraceTab extends Component {
     static defaultProps = {

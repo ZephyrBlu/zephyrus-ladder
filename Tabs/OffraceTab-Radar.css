@@ -1,0 +1,17 @@
+#radar {
+    margin: 0 auto;
+    grid-area: radar;
+    height: -webkit-max-content;
+    height: -moz-max-content;
+    height: max-content;
+    color: hsl(0, 0%, 47%);
+}
+
+#radar ul {
+    padding: 0;
+}
+
+#radar li {
+    display: inline;
+    padding: 0 10px;
+}

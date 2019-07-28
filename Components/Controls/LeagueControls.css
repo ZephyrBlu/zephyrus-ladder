@@ -1,0 +1,5 @@
+#league {
+    -ms-grid-row: 2;
+    -ms-grid-column: 3;
+    grid-area: league;
+}

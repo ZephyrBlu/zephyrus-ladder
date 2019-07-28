@@ -1,0 +1,21 @@
+#mmr h5 {
+    margin: 0;
+    font-size: 16px;
+}
+
+#chart {
+    width: 100%;
+    display: -ms-grid;
+    display: grid;
+    grid-column-gap: 40px;
+    -ms-grid-columns: 1fr 40px -webkit-min-content;
+    -ms-grid-columns: 1fr 40px min-content;
+    grid-template-columns: 1fr -webkit-min-content;
+    grid-template-columns: 1fr min-content;
+    -ms-grid-rows: -webkit-max-content -webkit-max-content;
+    grid-template-rows: -webkit-max-content -webkit-max-content;
+    -ms-grid-rows: max-content max-content;
+    grid-template-rows: max-content max-content;
+            grid-template-areas: 'chart race'
+                         'chart league';
+}

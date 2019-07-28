@@ -1,0 +1,5 @@
+#race {
+    -ms-grid-row: 1;
+    -ms-grid-column: 3;
+    grid-area: race;
+}

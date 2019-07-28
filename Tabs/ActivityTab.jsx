@@ -9,6 +9,7 @@ import {
     Tooltip,
 } from 'recharts';
 import CustomTooltip from '../Components/Tooltip';
+import './ActivityTab.css';
 
 export default class ActivityTab extends Component {
     static defaultProps = {

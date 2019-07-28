@@ -1,4 +1,6 @@
 import { Component, Fragment } from 'react';
+import './RaceControls.css';
+import './Controls.css';
 
 export default class RaceControls extends Component {
     static defaultProps = {

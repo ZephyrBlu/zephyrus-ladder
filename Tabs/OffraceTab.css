@@ -1,0 +1,30 @@
+#offrace {
+    margin-top: 60px;
+    display: -ms-grid;
+    display: grid;
+    -ms-grid-columns: 1fr 1fr;
+        grid-template: -webkit-min-content 1fr / 1fr 1fr;
+        grid-template: min-content 1fr / 1fr 1fr;
+        grid-template-areas: "title title"
+                         "radar pie";
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+}
+
+#offrace #title {
+    grid-area: title;
+    display: -ms-grid;
+    display: grid;
+    -ms-grid-rows: -webkit-min-content;
+    -ms-grid-rows: min-content;
+    -ms-grid-columns: 1fr 1fr;
+        grid-template: -webkit-min-content / 1fr 1fr;
+        grid-template: min-content / 1fr 1fr;
+    justify-items: center;
+}
+
+#offrace h2 {
+    color: hsl(0, 0%, 85%);
+    font-weight: 400;
+}

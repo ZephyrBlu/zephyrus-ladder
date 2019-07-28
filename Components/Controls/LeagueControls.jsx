@@ -1,4 +1,6 @@
 import { Component, Fragment } from 'react';
+import './LeagueControls.css';
+import './Controls.css';
 
 export default class LeagueControls extends Component {
     static defaultProps = {
