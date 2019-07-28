@@ -1,5 +1,7 @@
 #offrace {
+    height: 640px;
     margin-top: 60px;
+    padding-bottom: 20px;
     display: -ms-grid;
     display: grid;
     -ms-grid-columns: 1fr 1fr;
