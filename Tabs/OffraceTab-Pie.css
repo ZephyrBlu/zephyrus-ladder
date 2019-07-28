@@ -13,21 +13,12 @@
     grid-template-columns: repeat(3, 200px);
     grid-column-gap: 20px;
     grid-row-gap: 10px;
-        grid-template-areas: "controls1 zerg random"
-                         "protoss terran controls2";
+        grid-template-areas: "terran zerg random"
+                         "protoss controls controls";
 }
 
-#offrace #league1 {
-    grid-area: controls1;
-    width: -webkit-min-content;
-    width: -moz-min-content;
-    width: min-content;
-    -ms-grid-column-align: center;
-        justify-self: center;
-}
-
-#offrace #league2 {
-    grid-area: controls2;
+#offrace #controls {
+    grid-area: controls;
     width: -webkit-min-content;
     width: -moz-min-content;
     width: min-content;

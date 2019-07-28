@@ -35,6 +35,7 @@ nav table {
 }
 
 nav button {
+    width: 90px;
     background-color: hsl(240, 80%, 5%);
     border: 1px solid hsl(0, 0%, 85%);
     border-left: none;

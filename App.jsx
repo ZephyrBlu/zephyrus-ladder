@@ -127,7 +127,7 @@ export default class App extends Component {
                             onClick={() => this.changeTab('offrace')}
                             className={`${this.isTabActive('offrace')}`}
                         >
-                            Off-Racing
+                            Off-Race
                         </button>
                         <p id="new">NEW</p>
                     </nav>
