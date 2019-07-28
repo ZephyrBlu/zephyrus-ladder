@@ -129,6 +129,7 @@ export default class App extends Component {
                         >
                             Off-Racing
                         </button>
+                        <p id="new">NEW</p>
                     </nav>
                 </header>
                 {section}

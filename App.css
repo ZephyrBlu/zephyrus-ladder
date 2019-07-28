@@ -27,6 +27,7 @@ nav {
     -webkit-transition: 0.8s;
     -o-transition: 0.8s;
     transition: 0.8s;
+    position: relative;
 }
 
 nav table {
@@ -48,7 +49,7 @@ nav button:first-child {
     padding-left: 15px;
 }
 
-nav button:last-child {
+nav button:nth-child(3) {
     border-radius: 0 25px 25px 0;
     border-right: 1px solid hsl(0, 0%, 85%);
     padding-right: 15px;
@@ -57,6 +58,21 @@ nav button:last-child {
 button.active {
     background-color: hsl(210, 68%, 47%);
     cursor: pointer;
+}
+
+#new {
+    margin: 0;
+    padding: 3px;
+    font-weight: bold;
+    font-size: 11px;
+    width: max-content;
+    border-radius: 15px;
+    border: 1px solid white;
+    background-color: yellow;
+    color: hsl(240, 80%, 5%);
+    position: absolute;
+    top: 18px;
+    right: -8px;
 }
 
 h1 {
