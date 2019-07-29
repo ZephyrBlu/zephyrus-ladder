@@ -27,6 +27,52 @@ const WinrateTab = (props) => {
     Match-ups are read left-to-right, with the winrate being based on
     the performance of the left race`;
 
+    const colours = {
+        '-10': 'hsl(0, 100%, 30%)',
+        '-9': 'hsl(0, 100%, 40%)',
+        '-8': 'hsl(0, 100%, 45%)',
+        '-7': 'hsl(0, 100%, 50%)',
+        '-6': 'hsl(0, 100%, 55%)',
+        '-5': 'hsl(0, 100%, 60%)',
+        '-4': 'hsl(0, 100%, 65%)',
+        '-3': 'hsl(0, 100%, 70%)',
+        '-2': 'hsl(0, 100%, 75%)',
+        '-1': 'hsl(0, 100%, 80%)',
+        0: 'hsl(0, 0%, 85%)',
+        1: 'hsl(120, 100%, 80%)',
+        2: 'hsl(120, 100%, 75%)',
+        3: 'hsl(120, 100%, 70%)',
+        4: 'hsl(120, 100%, 65%)',
+        5: 'hsl(120, 100%, 60%)',
+        6: 'hsl(120, 100%, 55%)',
+        7: 'hsl(120, 100%, 50%)',
+        8: 'hsl(120, 100%, 45%)',
+        9: 'hsl(120, 100%, 40%)',
+        10: 'hsl(120, 100%, 30%)',
+    };
+
+    const getColour = (value) => {
+        if (value === 0) {
+            return 'black';
+        }
+
+        let v = value - 50;
+        if (v < 0) {
+            if (v < -10) {
+                v = '-10';
+            } else {
+                v = Math.floor(v).toString();
+            }
+        } else if (v > 10) {
+            v = 10;
+        } else {
+            v = Math.ceil(v);
+        }
+
+        const colour = colours[v];
+        return colour;
+    };
+
     const checkDataType = (race, innerRace) => {
         if (race === innerRace) {
             if (dataType === 'league') {
@@ -118,7 +164,15 @@ const WinrateTab = (props) => {
                                     }
                                     arrow="true"
                                 >
-                                    <td key={`${race}-value-vert`} className={`${checkDataType(race, innerRace)} values`} />
+                                    <td
+                                        key={`${race}-value-vert`}
+                                        className={
+                                            `${checkDataType(race, innerRace)} values`
+                                        }
+                                        style={{
+                                            backgroundColor: getColour(currentData[race][innerRace][0]),
+                                        }}
+                                    />
                                 </Tippy>
                             ))}
                         </tr>

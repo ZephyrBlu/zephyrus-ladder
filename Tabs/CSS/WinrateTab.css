@@ -170,16 +170,12 @@ input:checked + .slider:before {
 /* Rounding borders */
 
 
-#winrate td.values {
-    background-color: green;
-}
-
 #winrate td.values:hover {
     opacity: 0.7;
 }
 
 #winrate td.null {
-    background-color: hsl(0, 0%, 47%);
+    background-color: hsl(0, 0%, 47%) !important;
 }
 
 #winrate td.winrate-heading-horiz {
