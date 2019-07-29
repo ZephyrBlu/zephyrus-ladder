@@ -82,7 +82,6 @@ const CustomTooltip = (props) => {
         }
     }
 
-
     return (
         <div id="tooltip">
             {content}
