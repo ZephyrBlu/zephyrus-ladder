@@ -149,6 +149,27 @@ input:checked + .slider:before {
 /* Removing borders on edge of values */
 
 
+/* Rounding borders */
+
+#winrate table tr:nth-child(2) td:nth-child(2) {
+    border-radius: 15px 0 0 0;
+}
+
+#winrate table tr:nth-child(2) td:last-child {
+    border-radius: 0 15px 0 0;
+}
+
+#winrate table tr:last-child td:nth-child(2) {
+    border-radius: 0 0 0 15px;
+}
+
+#winrate table tr:last-child td:last-child {
+    border-radius: 0 0 15px 0;
+}
+
+/* Rounding borders */
+
+
 #winrate td.values {
     background-color: green;
 }
