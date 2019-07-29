@@ -1,11 +1,113 @@
 #winrate {
     display: grid;
     grid-template-columns: max-content min-content;
-    grid-template-rows: 1fr;
-    grid-template-areas: 'winrates controls';
-    grid-column-gap: 80px;
+    grid-template-rows: min-content 1fr;
+    grid-template-areas:
+        'title1 title2'
+        'winrates controls';
+    grid-column-gap: 60px;
     align-items: flex-end;
 }
+
+#winrates-monthly {
+    grid-area: title1;
+    justify-self: flex-end;
+    padding-right: 50px;
+    font-weight: 400;
+    color: hsl(0, 0%, 85%);
+}
+
+#winrates-monthly h2 {
+    font-weight: 400;
+}
+
+#winrate h4 {
+    color: hsl(0, 0%, 85%);
+    font-weight: 400;
+    display: inline;
+    margin: 0;
+}
+
+#winrate h4:hover {
+    cursor: default;
+}
+
+#winrate .all-controls h4:nth-child(1) {
+    margin-right: 0px;
+}
+
+#winrate .all-controls h4:nth-child(2) {
+    margin-left: 25px;
+}
+
+
+/* ----- SLIDER ----- */
+
+
+/* The switch - the box around the slider */
+.switch {
+    position: relative;
+    margin-top: 10px;
+    margin-bottom: 15px;
+    display: inline-block;
+    width: 100px;
+    height: 34px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+/* The slider */
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: 0.5s;
+    transition: 0.5s;
+}
+
+.slider {
+    background-color: hsl(210, 68%, 47%);
+}
+
+input:checked + .slider:before {
+    -webkit-transform: translateX(66px);
+    -ms-transform: translateX(66px);
+    transform: translateX(66px);
+}
+
+/* Rounded sliders */
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+
+
+/* ----- END SLIDER ----- */
+
 
 #winrate table {
     border-collapse: collapse;
@@ -18,33 +120,71 @@
     margin: 0;
     height: 80px;
     width: 80px;
-    color: white;
-    border: 1px solid white;
+    color: hsl(0, 0%, 85%);
+    border: 1px solid hsl(0, 0%, 85%);
+    transition: 0.5s;
 }
+
+
+/* Removing borders on edge of values */
+
+
+#winrate table tr:nth-child(2) td {
+    border-top: none;
+}
+
+#winrate table tr td:nth-child(2) {
+    border-left: none;
+}
+
+#winrate table tr:last-child td {
+    border-bottom: none;
+}
+
+#winrate table tr td:last-child {
+    border-right: none;
+}
+
+
+/* Removing borders on edge of values */
+
 
 #winrate td.values {
     background-color: green;
 }
 
+#winrate td.values:hover {
+    opacity: 0.7;
+}
+
+#winrate td.null {
+    background-color: hsl(0, 0%, 47%);
+}
+
 #winrate td.winrate-heading-horiz {
     border: none;
-    border-bottom: 1px solid white;
-    height: 70px;
+    height: 80px;
 }
 
 #winrate td.winrate-heading-vert {
+    width: 130px;
     border: none;
-    border-right: 1px solid white;
-    padding-right: 10px;
 }
 
-td#filler  {
+td#league  {
     height: 70px;
     border: none;
+    text-decoration: underline;
+    text-align: center;
+    font-size: 20px;
+}
+
+#winrate .all-controls {
+    grid-area: controls;
+    width: 80%;
 }
 
 #winrate .controls {
-    grid-area: controls;
     display: inline-block;
     width: min-content;
     margin-top: 0;
