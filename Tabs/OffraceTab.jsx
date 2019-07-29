@@ -13,9 +13,9 @@ import {
 } from 'recharts';
 import Tippy from '@tippy.js/react';
 import CustomTooltip from '../Components/Tooltip';
-import './OffraceTab.css';
-import './OffraceTab-Radar.css';
-import './OffraceTab-Pie.css';
+import './CSS/OffraceTab.css';
+import './CSS/OffraceTab-Radar.css';
+import './CSS/OffraceTab-Pie.css';
 
 export default class OffraceTab extends Component {
     static defaultProps = {
@@ -47,42 +47,6 @@ export default class OffraceTab extends Component {
         this.isLeagueActive = this.isLeagueActive.bind(this);
         this.changeLeague = this.changeLeague.bind(this);
     }
-
-    // componentDidMount() {
-    //     // tippy('#radar-help', {
-    //     //     content: 'This chart shows the distribution of players who Off-Race across all leagues',
-    //     //     size: 'regular',
-    //     //     arrow: true,
-    //     // });
-
-    //     // const protossPieContent = `This chart shows the off-race distribution of Protoss players in ${this.state.currentLeague} who off-race`;
-    //     // tippy('#protoss-pie-help', {
-    //     //     content: protossPieContent,
-    //     //     size: 'regular',
-    //     //     arrow: true,
-    //     // });
-
-    //     // const terranPieContent = `This chart shows the off-race distribution of Terran players in ${this.state.currentLeague} who off-race`;
-    //     // tippy('#terran-pie-help', {
-    //     //     content: terranPieContent,
-    //     //     size: 'regular',
-    //     //     arrow: true,
-    //     // });
-
-    //     // const zergPieContent = `This chart shows the off-race distribution of Zerg players in ${this.state.currentLeague} who off-race`;
-    //     // tippy('#zerg-pie-help', {
-    //     //     content: zergPieContent,
-    //     //     size: 'regular',
-    //     //     arrow: true,
-    //     // });
-
-    //     // const randomPieContent = `This chart shows the off-race distribution of Random players in ${this.state.currentLeague} who off-race`;
-    //     // tippy('#random-pie-help', {
-    //     //     content: 'randomPieContent',
-    //     //     size: 'regular',
-    //     //     arrow: true,
-    //     // });
-    // }
 
     async changeLeague(selectedLeague) {
         await this.setState({
@@ -357,7 +321,7 @@ export default class OffraceTab extends Component {
                                     style={{
                                         fill: '#000000',
                                         position: 'relative',
-                                        top: '5px',
+                                        top: '3px',
                                         right: '-5px',
                                     }}
                                 >

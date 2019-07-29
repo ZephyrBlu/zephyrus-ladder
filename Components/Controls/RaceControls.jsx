@@ -4,6 +4,7 @@ import './Controls.css';
 
 export default class RaceControls extends Component {
     static defaultProps = {
+        onRaceSelect: () => {},
         isLineActive: () => {},
         lineState: {
             All: 1,

@@ -4,7 +4,7 @@ import './Controls.css';
 
 export default class LeagueControls extends Component {
     static defaultProps = {
-        isLeagueActive: () => {},
+        onLeagueChange: () => {},
         currentLeague: 'All',
     }
 
@@ -38,20 +38,27 @@ export default class LeagueControls extends Component {
             'Bronze',
         ];
 
-        if (this.props.chart === 'mmr') {
-            return (
-                <div id="league" className="controls">
-                    {leagues.map((league, index) => (
-                        <button
-                            key={index}
-                            onClick={() => this.handleLeagueChange(league)}
-                            className={`${this.isLeagueActive(league)}`}
-                        >
-                            {league}
-                        </button>
-                    ))}
-                </div>
-            );
+        switch (this.props.chart) {
+            case 'winrate':
+            case 'mmr':
+                return (
+                    <div id="league" className="controls">
+                        {leagues.map((league, index) => (
+                            <button
+                                key={index}
+                                onClick={() => this.handleLeagueChange(league)}
+                                className={`${this.isLeagueActive(league)}`}
+                            >
+                                {league}
+                            </button>
+                        ))}
+                    </div>
+                );
+
+            default:
+                return (
+                    <p>No chart specified</p>
+                );
         }
     }
 }
