@@ -1,4 +1,4 @@
-import { useEffect, Fragment } from 'react';
+import { Fragment } from 'react';
 import './RaceControls.css';
 import './Controls.css';
 

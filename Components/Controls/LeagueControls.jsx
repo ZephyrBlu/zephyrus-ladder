@@ -1,4 +1,4 @@
-import { Component, Fragment } from 'react';
+import { Fragment } from 'react';
 import './LeagueControls.css';
 import './Controls.css';
 
