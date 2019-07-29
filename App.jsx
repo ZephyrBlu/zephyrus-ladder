@@ -2,6 +2,7 @@ import { Component, Fragment } from 'react';
 import MmrTab from './Tabs/MmrTab';
 import ActivityTab from './Tabs/ActivityTab';
 import OffraceTab from './Tabs/OffraceTab';
+import WinrateTab from './Tabs/WinrateTab';
 import './App.css';
 
 export default class App extends Component {
@@ -100,6 +101,15 @@ export default class App extends Component {
                 );
                 break;
 
+            case 'winrate':
+                title = (<h1>Match-up Winrates</h1>);
+                section = (
+                    <WinrateTab
+                        data={this.state.data.winrate}
+                    />
+                );
+                break;
+
             default:
                 break;
         }
@@ -128,6 +138,13 @@ export default class App extends Component {
                             className={`${this.isTabActive('offrace')}`}
                         >
                             Off-Race
+                        </button>
+                        <p id="new1">NEW</p>
+                        <button
+                            onClick={() => this.changeTab('winrate')}
+                            className={`${this.isTabActive('winrate')}`}
+                        >
+                            Winrate
                         </button>
                         <p id="new">NEW</p>
                     </nav>

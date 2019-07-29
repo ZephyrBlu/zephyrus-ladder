@@ -1,0 +1,51 @@
+#winrate {
+    display: grid;
+    grid-template-columns: max-content min-content;
+    grid-template-rows: 1fr;
+    grid-template-areas: 'winrates controls';
+    grid-column-gap: 80px;
+    align-items: flex-end;
+}
+
+#winrate table {
+    border-collapse: collapse;
+    display: inline-block;
+    grid-area: winrates;
+}
+
+#winrate td {
+    padding: 0;
+    margin: 0;
+    height: 80px;
+    width: 80px;
+    color: white;
+    border: 1px solid white;
+}
+
+#winrate td.values {
+    background-color: green;
+}
+
+#winrate td.winrate-heading-horiz {
+    border: none;
+    border-bottom: 1px solid white;
+    height: 70px;
+}
+
+#winrate td.winrate-heading-vert {
+    border: none;
+    border-right: 1px solid white;
+    padding-right: 10px;
+}
+
+td#filler  {
+    height: 70px;
+    border: none;
+}
+
+#winrate .controls {
+    grid-area: controls;
+    display: inline-block;
+    width: min-content;
+    margin-top: 0;
+}
