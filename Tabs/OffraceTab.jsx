@@ -335,8 +335,8 @@ const OffraceTab = (props) => {
                                     <button
                                         style={{
                                             borderRadius: '15px 0 0 0',
-                                            borderTop: '1px solid white',
-                                            borderLeft: '1px solid white',
+                                            borderTop: '1px solid hsl(0, 0%, 47%)',
+                                            borderLeft: '1px solid hsl(0, 0%, 47%)',
                                         }}
                                         onClick={() => changeLeague('All')}
                                         className={`${isLeagueActive('All')}`}
@@ -347,7 +347,7 @@ const OffraceTab = (props) => {
                                 <td>
                                     <button
                                         style={{
-                                            borderTop: '1px solid white',
+                                            borderTop: '1px solid hsl(0, 0%, 47%)',
                                         }}
                                         onClick={() => changeLeague('Grandmaster')}
                                         className={`${isLeagueActive('Grandmaster')}`}
@@ -358,7 +358,7 @@ const OffraceTab = (props) => {
                                 <td>
                                     <button
                                         style={{
-                                            borderTop: '1px solid white',
+                                            borderTop: '1px solid hsl(0, 0%, 47%)',
                                         }}
                                         onClick={() => changeLeague('Master')}
                                         className={`${isLeagueActive('Master')}`}
@@ -370,8 +370,8 @@ const OffraceTab = (props) => {
                                     <button
                                         style={{
                                             borderRadius: '0 15px 0 0',
-                                            borderTop: '1px solid white',
-                                            borderRight: '1px solid white',
+                                            borderTop: '1px solid hsl(0, 0%, 47%)',
+                                            borderRight: '1px solid hsl(0, 0%, 47%)',
                                         }}
                                         onClick={() => changeLeague('Diamond')}
                                         className={`${isLeagueActive('Diamond')}`}
@@ -385,8 +385,8 @@ const OffraceTab = (props) => {
                                     <button
                                         style={{
                                             borderRadius: '0 0 0 15px',
-                                            borderBottom: '1px solid white',
-                                            borderLeft: '1px solid white',
+                                            borderBottom: '1px solid hsl(0, 0%, 47%)',
+                                            borderLeft: '1px solid hsl(0, 0%, 47%)',
                                         }}
                                         onClick={() => changeLeague('Bronze')}
                                         className={`${isLeagueActive('Bronze')}`}
@@ -397,7 +397,7 @@ const OffraceTab = (props) => {
                                 <td>
                                     <button
                                         style={{
-                                            borderBottom: '1px solid white',
+                                            borderBottom: '1px solid hsl(0, 0%, 47%)',
                                         }}
                                         onClick={() => changeLeague('Silver')}
                                         className={`${isLeagueActive('Silver')}`}
@@ -408,7 +408,7 @@ const OffraceTab = (props) => {
                                 <td>
                                     <button
                                         style={{
-                                            borderBottom: '1px solid white',
+                                            borderBottom: '1px solid hsl(0, 0%, 47%)',
                                         }}
                                         onClick={() => changeLeague('Gold')}
                                         className={`${isLeagueActive('Gold')}`}
@@ -420,8 +420,8 @@ const OffraceTab = (props) => {
                                     <button
                                         style={{
                                             borderRadius: '0 0 15px 0',
-                                            borderBottom: '1px solid white',
-                                            borderRight: '1px solid white',
+                                            borderBottom: '1px solid hsl(0, 0%, 47%)',
+                                            borderRight: '1px solid hsl(0, 0%, 47%)',
                                         }}
                                         onClick={() => changeLeague('Platinum')}
                                         className={`${isLeagueActive('Platinum')}`}

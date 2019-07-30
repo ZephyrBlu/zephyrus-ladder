@@ -4,16 +4,16 @@
 
 .controls button {
     width: 100%;
-    border-left: 1px solid hsl(0, 0%, 85%);
-    border-right: 1px solid hsl(0, 0%, 85%);
+    border-left: 1px solid hsl(0, 0%, 47%); /*hsl(0, 0%, 85%);*/
+    border-right: 1px solid hsl(0, 0%, 47%); /*hsl(0, 0%, 85%);*/
 }
 
 .controls button:first-child {
     border-radius: 15px 15px 0 0;
-    border-top: 1px solid hsl(0, 0%, 85%);  
+    border-top: 1px solid hsl(0, 0%, 47%); /*hsl(0, 0%, 85%); */ 
 }
 
 .controls button:last-child {
     border-radius: 0 0 15px 15px;
-    border-bottom: 1px solid hsl(0, 0%, 85%);
+    border-bottom: 1px solid hsl(0, 0%, 47%); /*hsl(0, 0%, 85%);*/
 }

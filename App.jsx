@@ -118,7 +118,7 @@ export default class App extends Component {
             <div className="container">
                 <header>
                     <h2>zephyrus</h2>
-                    <h3>StarCraft II &nbsp;/&nbsp; Season 39 &nbsp;/&nbsp; NA Ladder</h3>
+                    <h3>StarCraft II &nbsp;/&nbsp; Season 39-40 &nbsp;/&nbsp; NA Ladder</h3>
                     {title}
                     <nav>
                         <button

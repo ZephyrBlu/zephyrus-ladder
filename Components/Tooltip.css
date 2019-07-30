@@ -1,9 +1,9 @@
 #tooltip {
     border-radius: 10px;
     padding: 2px 16px;
-    background-color: hsla(0, 0%, 0%, 0.8);
+    background-color: hsla(0, 0%, 2%, 0.8); /*hsla(0, 0%, 0%, 0.8);*/
     color: hsl(0, 0%, 85%);
-    border: 1px solid hsl(0, 0%, 85%);
+    border: 1px solid hsl(0, 0%, 47%); /*hsl(0, 0%, 85%);*/
 }
 
 #radar #tooltip {

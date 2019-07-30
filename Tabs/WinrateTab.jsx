@@ -5,7 +5,7 @@ import './CSS/WinrateTab.css';
 
 const WinrateTab = (props) => {
     const [dataType, setDataType] = useState('all');
-    const [currentLeague, setCurrentLeague] = useState('Grandmaster');
+    const [currentLeague, setCurrentLeague] = useState('All');
 
     const handleLeagueChange = (selectedLeague) => {
         setCurrentLeague(selectedLeague);
@@ -20,13 +20,14 @@ const WinrateTab = (props) => {
     };
 
     const races = ['Protoss', 'Terran', 'Zerg', 'Random'];
-
     const currentData = props.data[dataType][currentLeague];
-
     const monthlyContent = `Match-up winrates from the most recent month.
     Match-ups are read left-to-right, with the winrate being based on
     the performance of the left race`;
 
+
+    // change to dynamically creating
+    // colours based on key * 5
     const colours = {
         '-10': 'hsl(0, 100%, 30%)',
         '-9': 'hsl(0, 100%, 40%)',
@@ -57,6 +58,8 @@ const WinrateTab = (props) => {
         }
 
         let v = value - 50;
+
+        // clean up logic for readability
         if (v < 0) {
             if (v < -10) {
                 v = '-10';
@@ -75,7 +78,7 @@ const WinrateTab = (props) => {
 
     const checkDataType = (race, innerRace) => {
         if (race === innerRace) {
-            if (dataType === 'league') {
+            if (dataType === 'league' || currentLeague === 'All') {
                 return 'null';
             }
         }
