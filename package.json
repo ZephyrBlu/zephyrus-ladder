@@ -18,11 +18,11 @@
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-    "react-hot-loader": "^4.8.8",
+    "react-hot-loader": "^4.12.10",
     "react-router-dom": "^5.0.1",
     "recharts": "^1.6.2",
     "tippy.js": "^4.3.4",
-    "webpack-bundle-analyzer": "^3.3.2"
+    "webpack-bundle-analyzer": "^3.4.0"
   },
   "devDependencies": {
     "@neutrinojs/airbnb": "^8.3.0",

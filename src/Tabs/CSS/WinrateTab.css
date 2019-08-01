@@ -1,4 +1,17 @@
 #winrate {
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas: 'monthly weekly';
+}
+
+#winrate-weekly {
+    grid-area: weekly;
+}
+
+#winrate-monthly {
+    grid-area: monthly;
     display: grid;
     grid-template-columns: max-content min-content;
     grid-template-rows: min-content 1fr;
@@ -9,7 +22,7 @@
     align-items: flex-end;
 }
 
-#winrates-monthly {
+#winrate-monthly-title {
     grid-area: title1;
     justify-self: flex-end;
     padding-right: 50px;
@@ -17,11 +30,11 @@
     color: hsl(0, 0%, 85%);
 }
 
-#winrates-monthly h2 {
+#winrate-monthly-title h2 {
     font-weight: 400;
 }
 
-#winrate h4 {
+#winrate-monthly h4 {
     color: hsl(0, 0%, 85%);
     font-weight: 400;
     display: inline;
