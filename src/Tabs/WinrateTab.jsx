@@ -20,7 +20,7 @@ const WinrateTab = (props) => {
         grid: 'All',
         chart: 'Grandmaster',
     });
-    const [currentMatchup, setCurrentMatchup] = useState('Protoss.ProtossInner');
+    const [currentMatchup, setCurrentMatchup] = useState('PvP');
 
     const handleLeagueChange = (selectedLeague, type) => {
         setCurrentLeague(prevState => ({
@@ -44,7 +44,6 @@ const WinrateTab = (props) => {
     };
 
     const races = ['Protoss', 'Terran', 'Zerg', 'Random'];
-    const innerRaces = ['ProtossInner', 'TerranInner', 'ZergInner', 'RandomInner'];
     const currentWeeklyData = props.data.weekly[dataType.chart][currentLeague.chart];
     const currentAllData = props.data.all[dataType.grid][currentLeague.grid];
     const monthlyContent = `Match-up winrates from the most recent month.
@@ -77,6 +76,14 @@ const WinrateTab = (props) => {
         10: 'hsl(120, 100%, 30%)',
     };
 
+    const raceColours = {
+        All: 'hsl(120, 100%, 45%)',
+        Protoss: 'hsl(51, 100%, 50%)',
+        Random: 'hsl(198, 71%, 73%)',
+        Terran: 'red',
+        Zerg: 'hsl(282, 100%, 30%)',
+    };
+
     const getColour = (value) => {
         if (value === 0) {
             return 'black';
@@ -102,7 +109,7 @@ const WinrateTab = (props) => {
     };
 
     const checkDataType = (race, innerRace, type) => {
-        if (`${race}Inner` === innerRace) {
+        if (race === innerRace) {
             if (dataType[type] === 'league' || currentLeague[type] === 'All') {
                 return 'null';
             }
@@ -183,13 +190,13 @@ const WinrateTab = (props) => {
                                 <td key={`${race}-vert`} className="winrate-heading-vert">
                                     {race}
                                 </td>
-                                {innerRaces.map(innerRace => (
+                                {races.map(innerRace => (
                                     <Tippy
-                                        key={`tippy-${innerRace}`}
+                                        key={`tippy-${race}-${innerRace}`}
                                         content={
                                             `${race[0]}v${innerRace[0]}:
-                                            ${currentAllData[race][innerRace][0]}%
-                                            (${currentAllData[race][innerRace][1]})`
+                                            ${currentAllData[`${race[0]}v${innerRace[0]}`][0]}%
+                                            (${currentAllData[`${race[0]}v${innerRace[0]}`][1]})`
                                         }
                                         arrow="true"
                                     >
@@ -199,7 +206,7 @@ const WinrateTab = (props) => {
                                                 `${checkDataType(race, innerRace, 'grid')} values`
                                             }
                                             style={{
-                                                backgroundColor: getColour(currentAllData[race][innerRace][0]),
+                                                backgroundColor: getColour(currentAllData[`${race[0]}v${innerRace[0]}`][0]),
                                             }}
                                         />
                                     </Tippy>
@@ -241,18 +248,44 @@ const WinrateTab = (props) => {
                     <XAxis dataKey="bin" />
                     <YAxis />
                     <CartesianGrid horizontal={false} vertical={false} />
-                    <Tooltip
-                        formatter={(value, name, payload) => (['', `${value} (${payload.payload.Protoss.ProtossInner.value[1]})`])}
-                        separator=""
-                    />
+                    <Tooltip />
                     {races.map(race => (
-                        <Line
-                            key={`winrate-weekly-${race}`}
-                            type="monotone"
-                            dataKey="Protoss.ProtossInner.value[0]"
-                        />
+                        races.map(innerRace => (
+                            <Line
+                                key={`winrate-weekly-${race}`}
+                                type="monotone"
+                                dataKey={`${race[0]}v${innerRace[0]}.value[0]`}
+                                stroke={raceColours[`${race}`]}
+                            />
+                        ))
                     ))}
                 </LineChart>
+
+                <p style={{ color: 'white' }}>{currentMatchup}</p>
+
+                <Tippy
+                    content={`Counts all matches played by ${currentLeague.chart} players`}
+                    arrow="true"
+                >
+                    <h4 style={{ color: 'white' }}>All</h4>
+                </Tippy>
+                <Tippy
+                    content={`Only counts matches played between 2 ${currentLeague.chart} players`}
+                    arrow="true"
+                >
+                    <h4 style={{ color: 'white' }}>League</h4>
+                </Tippy>
+                <label className="switch">
+                    <input type="checkbox" onClick={() => changeDataType('chart')} />
+                    <span className="slider round" />
+                </label>
+                <LeagueControls
+                    // id="league"
+                    chart="chart"
+                    leagueKey="chart"
+                    onLeagueChange={handleLeagueChange}
+                    currentLeague={currentLeague}
+                />
             </section>
         </section>
     );
