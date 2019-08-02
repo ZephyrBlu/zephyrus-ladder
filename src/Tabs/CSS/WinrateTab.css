@@ -8,6 +8,12 @@
 
 #winrate-weekly {
     grid-area: weekly;
+    display: grid;
+    grid-template-columns: max-content min-content;
+    grid-template-rows: min-content 1fr;
+    grid-template-areas:
+        'title empty'
+        'winrates controls';
 }
 
 #winrate-monthly {
@@ -16,14 +22,14 @@
     grid-template-columns: max-content min-content;
     grid-template-rows: min-content 1fr;
     grid-template-areas:
-        'title1 title2'
+        'title empty'
         'winrates controls';
     grid-column-gap: 60px;
     align-items: flex-end;
 }
 
 #winrate-monthly-title {
-    grid-area: title1;
+    grid-area: title;
     justify-self: flex-end;
     padding-right: 50px;
     font-weight: 400;

@@ -4,10 +4,17 @@ import './Controls.css';
 
 const LeagueControls = (props) => {
     const handleLeagueChange = (selectedLeague) => {
-        props.onLeagueChange(selectedLeague);
+        props.onLeagueChange(selectedLeague, props.chart);
     };
 
     const isLeagueActive = (league) => {
+        if (props.leagueKey) {
+            if (props.currentLeague[props.leagueKey] === league) {
+                return 'active';
+            }
+            return '';
+        }
+
         if (props.currentLeague === league) {
             return 'active';
         }
@@ -25,28 +32,19 @@ const LeagueControls = (props) => {
         'Bronze',
     ];
 
-    switch (props.chart) {
-        case 'winrate':
-        case 'mmr':
-            return (
-                <div id="league" className="controls">
-                    {leagues.map((league, index) => (
-                        <button
-                            key={index}
-                            onClick={() => handleLeagueChange(league)}
-                            className={`${isLeagueActive(league)}`}
-                        >
-                            {league}
-                        </button>
-                    ))}
-                </div>
-            );
-
-        default:
-            return (
-                <p>No chart specified</p>
-            );
-    }
+    return (
+        <div id="league" className="controls">
+            {leagues.map((league, index) => (
+                <button
+                    key={index}
+                    onClick={() => handleLeagueChange(league)}
+                    className={`${isLeagueActive(league)}`}
+                >
+                    {league}
+                </button>
+            ))}
+        </div>
+    );
 };
 
 export default LeagueControls;

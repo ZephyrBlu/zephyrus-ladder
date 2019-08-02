@@ -12,27 +12,41 @@ import LeagueControls from '../Components/Controls/LeagueControls';
 import './CSS/WinrateTab.css';
 
 const WinrateTab = (props) => {
-    const [dataType, setDataType] = useState('all');
-    const [currentLeague, setCurrentLeague] = useState('All');
+    const [dataType, setDataType] = useState({
+        grid: 'all',
+        chart: 'all',
+    });
+    const [currentLeague, setCurrentLeague] = useState({
+        grid: 'All',
+        chart: 'Grandmaster',
+    });
     const [currentMatchup, setCurrentMatchup] = useState('Protoss.ProtossInner');
-    const [matchupState, setMatchupState] = useState({});
 
-    const handleLeagueChange = (selectedLeague) => {
-        setCurrentLeague(selectedLeague);
+    const handleLeagueChange = (selectedLeague, type) => {
+        setCurrentLeague(prevState => ({
+            ...prevState,
+            [type]: selectedLeague,
+        }));
     };
 
-    const changeDataType = () => {
-        if (dataType === 'all') {
-            setDataType('league');
+    const changeDataType = (type) => {
+        if (dataType[type] === 'all') {
+            setDataType(prevState => ({
+                ...prevState,
+                [type]: 'league',
+            }));
         } else {
-            setDataType('all');
+            setDataType(prevState => ({
+                ...prevState,
+                [type]: 'all',
+            }));
         }
     };
 
     const races = ['Protoss', 'Terran', 'Zerg', 'Random'];
     const innerRaces = ['ProtossInner', 'TerranInner', 'ZergInner', 'RandomInner'];
-    const currentWeeklyData = props.data.weekly.all.Diamond;
-    const currentAllData = props.data.all[dataType][currentLeague];
+    const currentWeeklyData = props.data.weekly[dataType.chart][currentLeague.chart];
+    const currentAllData = props.data.all[dataType.grid][currentLeague.grid];
     const monthlyContent = `Match-up winrates from the most recent month.
     Match-ups are read left-to-right, with the winrate being based on
     the performance of the left race`;
@@ -87,9 +101,9 @@ const WinrateTab = (props) => {
         return colour;
     };
 
-    const checkDataType = (race, innerRace) => {
+    const checkDataType = (race, innerRace, type) => {
         if (`${race}Inner` === innerRace) {
-            if (dataType === 'league' || currentLeague === 'All') {
+            if (dataType[type] === 'league' || currentLeague[type] === 'All') {
                 return 'null';
             }
         }
@@ -156,7 +170,7 @@ const WinrateTab = (props) => {
                     <tbody>
                         <tr>
                             <td id="league">
-                                {currentLeague}
+                                {currentLeague.grid}
                             </td>
                             {races.map(race => (
                                 <td key={`${race}-horiz`} className="winrate-heading-horiz">
@@ -182,7 +196,7 @@ const WinrateTab = (props) => {
                                         <td
                                             key={`${race}-value-vert`}
                                             className={
-                                                `${checkDataType(race, innerRace)} values`
+                                                `${checkDataType(race, innerRace, 'grid')} values`
                                             }
                                             style={{
                                                 backgroundColor: getColour(currentAllData[race][innerRace][0]),
@@ -197,24 +211,25 @@ const WinrateTab = (props) => {
 
                 <span className="all-controls">
                     <Tippy
-                        content={`Counts all matches played by ${currentLeague} players`}
+                        content={`Counts all matches played by ${currentLeague.grid} players`}
                         arrow="true"
                     >
                         <h4>All</h4>
                     </Tippy>
                     <Tippy
-                        content={`Only counts matches played between 2 ${currentLeague} players`}
+                        content={`Only counts matches played between 2 ${currentLeague.grid} players`}
                         arrow="true"
                     >
                         <h4>League</h4>
                     </Tippy>
                     <label className="switch">
-                        <input type="checkbox" onClick={() => changeDataType()} />
+                        <input type="checkbox" onClick={() => changeDataType('grid')} />
                         <span className="slider round" />
                     </label>
                     <LeagueControls
                         id="league"
-                        chart="winrate"
+                        chart="grid"
+                        leagueKey="grid"
                         onLeagueChange={handleLeagueChange}
                         currentLeague={currentLeague}
                     />
@@ -234,7 +249,7 @@ const WinrateTab = (props) => {
                         <Line
                             key={`winrate-weekly-${race}`}
                             type="monotone"
-                            dataKey={`${currentMatchup}.value[0]`}
+                            dataKey="Protoss.ProtossInner.value[0]"
                         />
                     ))}
                 </LineChart>

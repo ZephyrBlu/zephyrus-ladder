@@ -23,7 +23,7 @@ const MmrTab = (props) => {
         Random: 0,
     });
 
-    const handleLeagueChange = (selectedLeague) => {
+    const handleLeagueChange = (selectedLeague, type) => {
         setCurrentLeague(selectedLeague);
     };
 
