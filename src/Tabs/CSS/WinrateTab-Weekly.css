@@ -1,0 +1,19 @@
+#winrate-weekly {
+    display: grid;
+    grid-template-columns: 1fr min-content;
+    grid-template-rows: max-content max-content;
+    grid-template-areas:
+    'winrateWeekly controlsWeekly'
+    'winrateWeekly controlsWeekly';
+}
+
+#winrate-weekly .all-controls {
+    grid-area: controlsWeekly;
+}
+
+#winrate .recharts-responsive-container {
+  -ms-grid-row: 1;
+  -ms-grid-row-span: 2;
+  -ms-grid-column: 1;
+  grid-area: winrateWeekly;
+}

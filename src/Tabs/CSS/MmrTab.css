@@ -19,3 +19,10 @@
             grid-template-areas: 'chart race'
                          'chart league';
 }
+
+#mmr .recharts-responsive-container {
+  -ms-grid-row: 1;
+  -ms-grid-row-span: 2;
+  -ms-grid-column: 1;
+  grid-area: chart;
+}
