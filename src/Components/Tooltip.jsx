@@ -10,15 +10,15 @@ const CustomTooltip = (props) => {
         switch (props.chart) {
             case 'mmr': {
                 const active = {
-                    'all.value': false,
-                    'protoss.value': false,
-                    'terran.value': false,
-                    'zerg.value': false,
-                    'random.value': false,
+                    'all.value': 0,
+                    'protoss.value': 0,
+                    'terran.value': 0,
+                    'zerg.value': 0,
+                    'random.value': 0,
                 };
 
                 props.names.forEach((name) => {
-                    active[`${name.toLowerCase()}.value`] = true;
+                    active[`${name.toLowerCase()}.value`] = 1;
                 });
 
                 const activePayload = [];
@@ -76,6 +76,51 @@ const CustomTooltip = (props) => {
                     </Fragment>
                 );
                 break;
+
+            case 'winrate': {
+                const active = {
+                    PvP: 0,
+                    PvT: 0,
+                    PvZ: 0,
+                    PvR: 0,
+                    TvP: 0,
+                    TvT: 0,
+                    TvZ: 0,
+                    TvR: 0,
+                    ZvP: 0,
+                    ZvT: 0,
+                    ZvZ: 0,
+                    ZvR: 0,
+                    RvP: 0,
+                    RvT: 0,
+                    RvZ: 0,
+                    RvR: 0,
+                };
+
+                props.names.forEach((name) => {
+                    active[name] = 1;
+                });
+
+                const activePayload = [];
+                props.payload.forEach((payload) => {
+                    if (active[payload.name.slice(0, -9)]) {
+                        activePayload.push(payload);
+                    }
+                });
+
+                console.log(activePayload);
+
+                content = (
+                    <Fragment>
+                        {props.names.map((name, index) => (
+                            <p key={index}>
+                                {`${name}: ${activePayload[index].value}%`}
+                            </p>
+                        ))}
+                    </Fragment>
+                );
+                break;
+            }
 
             default:
                 break;
