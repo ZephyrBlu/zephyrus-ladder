@@ -11,13 +11,17 @@
 
 #winrate-weekly .all-controls {
     grid-area: controlsWeekly;
+    justify-self: center;
+    align-self: flex-end;
     margin-top: 0px;
 }
 
 #winrate-weekly #matchup-controls {
     grid-area: controlsMatchup;
-    color: white;
+    color: hsl(0, 0%, 85%);
     display: inline-block;
+    justify-self: center;
+    align-self: flex-end;
 }
 
 table#matchup-controls {
@@ -50,26 +54,26 @@ table#matchup-controls {
 
 table#matchup-controls tr:first-child td:first-child button {
     border-radius: 15px 0 0 0;
-    border-top: 1px solid white;
-    border-left: 1px solid white;
+    border-top: 1px solid hsl(0, 0%, 47%);
+    border-left: 1px solid hsl(0, 0%, 47%);
 }
 
 table#matchup-controls tr:first-child td:last-child button {
     border-radius: 0 15px 0 0;
-    border-top: 1px solid white;
-    border-right: 1px solid white;
+    border-top: 1px solid hsl(0, 0%, 47%);
+    border-right: 1px solid hsl(0, 0%, 47%);
 }
 
 table#matchup-controls tr:last-child td:first-child button {
     border-radius: 0 0 0 15px;
-    border-bottom: 1px solid white;
-    border-left: 1px solid white;
+    border-bottom: 1px solid hsl(0, 0%, 47%);
+    border-left: 1px solid hsl(0, 0%, 47%);
 }
 
 table#matchup-controls tr:last-child td:last-child button {
     border-radius: 0 0 15px 0;
-    border-bottom: 1px solid white;
-    border-right: 1px solid white;
+    border-bottom: 1px solid hsl(0, 0%, 47%);
+    border-right: 1px solid hsl(0, 0%, 47%);
 }
 
 /* Rounding borders */
@@ -78,19 +82,19 @@ table#matchup-controls tr:last-child td:last-child button {
 /* Colouring borders */
 
 table#matchup-controls tr:first-child td button {
-    border-top: 1px solid white;
+    border-top: 1px solid hsl(0, 0%, 47%);
 }
 
 table#matchup-controls tr td:first-child button {
-    border-left: 1px solid white;
+    border-left: 1px solid hsl(0, 0%, 47%);
 }
 
 table#matchup-controls tr:last-child td button {
-    border-bottom: 1px solid white;
+    border-bottom: 1px solid hsl(0, 0%, 47%);
 }
 
 table#matchup-controls tr td:last-child button {
-    border-right: 1px solid white;
+    border-right: 1px solid hsl(0, 0%, 47%);
 }
 
 /* Colouring borders */

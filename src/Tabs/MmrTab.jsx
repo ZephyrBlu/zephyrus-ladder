@@ -141,7 +141,7 @@ const MmrTab = (props) => {
                                 />
                             }
                             cursor={{
-                                stroke: 'hsla(0, 0%, 0%, 0.8)',
+                                stroke: 'hsla(0, 0%, 2%, 0.8)',
                                 strokeWidth: strokeSize[currentLeague],
                             }}
                         />
