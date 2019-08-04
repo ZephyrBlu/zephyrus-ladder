@@ -9,6 +9,7 @@ import {
     Tooltip,
 } from 'recharts';
 import Tippy from '@tippy.js/react';
+import CustomTooltip from '../Components/Tooltip';
 import LeagueControls from '../Components/Controls/LeagueControls';
 import './CSS/WinrateTab.css';
 import './CSS/WinrateTab-Grid.css';
@@ -23,7 +24,24 @@ const WinrateTab = (props) => {
         grid: 'All',
         chart: 'Grandmaster',
     });
-    const [currentMatchup, setCurrentMatchup] = useState('PvP');
+    const [matchupState, setMatchupState] = useState({
+        PvP: 1,
+        PvT: 0,
+        PvZ: 0,
+        PvR: 0,
+        TvP: 0,
+        TvT: 1,
+        TvZ: 0,
+        TvR: 0,
+        ZvP: 0,
+        ZvT: 0,
+        ZvZ: 1,
+        ZvR: 0,
+        RvP: 0,
+        RvT: 0,
+        RvZ: 0,
+        RvR: 0,
+    });
     const [activeChart, setActiveChart] = useState('grid');
 
     const handleLeagueChange = (selectedLeague, type) => {
@@ -43,6 +61,20 @@ const WinrateTab = (props) => {
             setDataType(prevState => ({
                 ...prevState,
                 [type]: 'all',
+            }));
+        }
+    };
+
+    const changeMatchupState = (selectedMatchup) => {
+        if (matchupState[selectedMatchup]) {
+            setMatchupState(prevState => ({
+                ...prevState,
+                [selectedMatchup]: 0,
+            }));
+        } else {
+            setMatchupState(prevState => ({
+                ...prevState,
+                [selectedMatchup]: 1,
             }));
         }
     };
@@ -92,6 +124,18 @@ const WinrateTab = (props) => {
         Zerg: 'hsl(282, 100%, 30%)',
     };
 
+    const baseLineStyle = {
+        opacity: null,
+        transition: 'opacity 0.8s',
+    };
+
+    const muConvert = {
+        P: 'Protoss',
+        T: 'Terran',
+        Z: 'Zerg',
+        R: 'Random',
+    };
+
     const getColour = (value) => {
         if (value === 0) {
             return 'black';
@@ -123,6 +167,53 @@ const WinrateTab = (props) => {
             }
         }
         return '';
+    };
+
+    const createStyle = (matchup) => {
+        const lineStyle = Object.assign({}, baseLineStyle);
+        lineStyle.opacity = matchupState[matchup];
+        return lineStyle;
+    };
+
+    const isLineActive = (line, returnType = null) => {
+        const mainRace = muConvert[line[0]];
+        if (matchupState[line]) {
+            switch (returnType) {
+                case 'bool':
+                    return true;
+
+                case 'num':
+                    return 1;
+
+                case 'style':
+                    return { stroke: raceColours[mainRace] };
+
+                default:
+                    return 'active';
+            }
+        }
+
+        switch (returnType) {
+            case 'style':
+            case 'bool':
+                return false;
+
+            case 'num':
+                return 0;
+
+            default:
+                return '';
+        }
+    };
+
+    const getActiveLines = () => {
+        const active = [];
+        Object.keys(matchupState).forEach((line) => {
+            if (isLineActive(line, 'bool')) {
+                active.push(line);
+            }
+        });
+        return active;
     };
 
     let chart;
@@ -263,10 +354,21 @@ const WinrateTab = (props) => {
                     <ResponsiveContainer width="99%" height={600}>
                         <LineChart data={currentWeeklyData}>
                             <XAxis dataKey="bin" />
-                            <YAxis />
-                            <CartesianGrid horizontal={false} vertical={false} />
+                            <YAxis domain={[40, 60]} />
+                            <CartesianGrid
+                                horizontal={false}
+                                vertical={false}
+                            />
                             <Tooltip
-                                formatter={(value, name, payload) => ([`${value}%`, `${payload.dataKey.slice(0, 3)}`])}
+                                content={
+                                    <CustomTooltip
+                                        chart="winrate"
+                                        names={getActiveLines()}
+                                    />
+                                }
+                                cursor={{
+                                    stroke: 'hsla(0, 0%, 0%, 0.8)',
+                                }}
                             />
                             {races.map(race => (
                                 races.map(innerRace => (
@@ -275,7 +377,15 @@ const WinrateTab = (props) => {
                                         type="monotone"
                                         dataKey={`${race[0]}v${innerRace[0]}.value[0]`}
                                         stroke={raceColours[`${race}`]}
+                                        strokeWidth={2}
+                                        style={createStyle(`${race[0]}v${innerRace[0]}`)}
                                         dot={false}
+                                        activeDot={
+                                            isLineActive(
+                                                `${race[0]}v${innerRace[0]}`,
+                                                'style',
+                                            )
+                                        }
                                     />
                                 ))
                             ))}
@@ -296,7 +406,7 @@ const WinrateTab = (props) => {
                             <h4>League</h4>
                         </Tippy>
                         <label className="switch">
-                            <input type="checkbox" onClick={() => changeDataType('grid')} />
+                            <input type="checkbox" onClick={() => changeDataType('chart')} />
                             <span className="slider round" />
                         </label>
                         <LeagueControls
@@ -307,6 +417,26 @@ const WinrateTab = (props) => {
                             currentLeague={currentLeague}
                         />
                     </span>
+
+                    <table id="matchup-controls">
+                        <tbody>
+                            {races.map(race => (
+                                <tr key={`weekly-row-${race}`}>
+                                    {races.map(innerRace => (
+                                        <td key={`weekly-cell-${race}-${innerRace}`}>
+                                            <button
+                                                key={`weekly-button-${race}-${innerRace}`}
+                                                onClick={() => changeMatchupState(`${race[0]}v${innerRace[0]}`)}
+                                                className={`${isLineActive(`${race[0]}v${innerRace[0]}`)}`}
+                                            >
+                                                {`${race[0]}v${innerRace[0]}`}
+                                            </button>
+                                        </td>
+                                    ))}
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
                 </section>
             );
             break;

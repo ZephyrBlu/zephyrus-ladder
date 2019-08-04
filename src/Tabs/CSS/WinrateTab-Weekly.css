@@ -1,14 +1,42 @@
 #winrate-weekly {
+    margin: 40px auto;
+    width: 100%;
     display: grid;
     grid-template-columns: 1fr min-content;
     grid-template-rows: max-content max-content;
     grid-template-areas:
     'winrateWeekly controlsWeekly'
-    'winrateWeekly controlsWeekly';
+    'winrateWeekly controlsMatchup';
 }
 
 #winrate-weekly .all-controls {
     grid-area: controlsWeekly;
+    margin-top: 0px;
+}
+
+#winrate-weekly #matchup-controls {
+    grid-area: controlsMatchup;
+    color: white;
+    display: inline-block;
+}
+
+table#matchup-controls {
+    border-collapse: collapse;
+    width: min-content;
+    height: min-content;
+}
+
+#matchup-controls td {
+    padding: 0;
+    margin: 0;
+    height: 40px;
+    width: 40px;
+}
+
+#matchup-controls button {
+    width: 100%;
+    height: 100%;
+    padding: 0 10px;
 }
 
 #winrate .recharts-responsive-container {
@@ -17,3 +45,52 @@
   -ms-grid-column: 1;
   grid-area: winrateWeekly;
 }
+
+/* Rounding borders */
+
+table#matchup-controls tr:first-child td:first-child button {
+    border-radius: 15px 0 0 0;
+    border-top: 1px solid white;
+    border-left: 1px solid white;
+}
+
+table#matchup-controls tr:first-child td:last-child button {
+    border-radius: 0 15px 0 0;
+    border-top: 1px solid white;
+    border-right: 1px solid white;
+}
+
+table#matchup-controls tr:last-child td:first-child button {
+    border-radius: 0 0 0 15px;
+    border-bottom: 1px solid white;
+    border-left: 1px solid white;
+}
+
+table#matchup-controls tr:last-child td:last-child button {
+    border-radius: 0 0 15px 0;
+    border-bottom: 1px solid white;
+    border-right: 1px solid white;
+}
+
+/* Rounding borders */
+
+
+/* Colouring borders */
+
+table#matchup-controls tr:first-child td button {
+    border-top: 1px solid white;
+}
+
+table#matchup-controls tr td:first-child button {
+    border-left: 1px solid white;
+}
+
+table#matchup-controls tr:last-child td button {
+    border-bottom: 1px solid white;
+}
+
+table#matchup-controls tr td:last-child button {
+    border-right: 1px solid white;
+}
+
+/* Colouring borders */

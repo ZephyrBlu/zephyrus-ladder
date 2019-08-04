@@ -28,13 +28,13 @@
     grid-area: controls;
 }
 
-#winrate table {
+#winrate-monthly table {
     border-collapse: collapse;
     display: inline-block;
     grid-area: winrates;
 }
 
-#winrate td {
+#winrate-monthly td {
     padding: 0;
     margin: 0;
     height: 110px;
@@ -49,19 +49,19 @@
 /* Removing borders on edge of values */
 
 
-#winrate table tr:nth-child(2) td {
+#winrate-monthly table tr:nth-child(2) td {
     border-top: none;
 }
 
-#winrate table tr td:nth-child(2) {
+#winrate-monthly table tr td:nth-child(2) {
     border-left: none;
 }
 
-#winrate table tr:last-child td {
+#winrate-monthly table tr:last-child td {
     border-bottom: none;
 }
 
-#winrate table tr td:last-child {
+#winrate-monthly table tr td:last-child {
     border-right: none;
 }
 
@@ -71,39 +71,39 @@
 
 /* Rounding borders */
 
-#winrate table tr:nth-child(2) td:nth-child(2) {
+#winrate-monthly table tr:nth-child(2) td:nth-child(2) {
     border-radius: 15px 0 0 0;
 }
 
-#winrate table tr:nth-child(2) td:last-child {
+#winrate-monthly table tr:nth-child(2) td:last-child {
     border-radius: 0 15px 0 0;
 }
 
-#winrate table tr:last-child td:nth-child(2) {
+#winrate-monthly table tr:last-child td:nth-child(2) {
     border-radius: 0 0 0 15px;
 }
 
-#winrate table tr:last-child td:last-child {
+#winrate-monthly table tr:last-child td:last-child {
     border-radius: 0 0 15px 0;
 }
 
 /* Rounding borders */
 
 
-#winrate td.values:hover {
+#winrate-monthly td.values:hover {
     opacity: 0.7;
 }
 
-#winrate td.null {
+#winrate-monthly td.null {
     background-color: hsl(0, 0%, 47%) !important;
 }
 
-#winrate td.winrate-heading-horiz {
+#winrate-monthly td.winrate-heading-horiz {
     border: none;
     height: 80px;
 }
 
-#winrate td.winrate-heading-vert {
+#winrate-monthly td.winrate-heading-vert {
     width: 130px;
     border: none;
 }
