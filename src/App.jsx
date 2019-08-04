@@ -57,8 +57,8 @@ export default class App extends Component {
         });
     }
 
-    async changeTab(tabName) {
-        await this.setState({
+    changeTab(tabName) {
+        this.setState({
             activeTab: tabName,
         });
     }

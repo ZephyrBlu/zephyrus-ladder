@@ -83,6 +83,13 @@ const WinrateTab = (props) => {
         setActiveChart(chart);
     };
 
+    const isChartActive = (chart) => {
+        if (chart === activeChart) {
+            return 'active';
+        }
+        return '';
+    };
+
     const races = ['Protoss', 'Terran', 'Zerg', 'Random'];
     const currentWeeklyData = props.data.weekly[dataType.chart][currentLeague.chart];
     const currentAllData = props.data.all[dataType.grid][currentLeague.grid];
@@ -451,11 +458,13 @@ const WinrateTab = (props) => {
             <nav>
                 <button
                     onClick={() => changeChart('grid')}
+                    className={`${isChartActive('grid')}`}
                 >
                     Grid
                 </button>
                 <button
                     onClick={() => changeChart('chart')}
+                    className={`${isChartActive('chart')}`}
                 >
                     Timeline
                 </button>
