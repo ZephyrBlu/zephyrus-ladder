@@ -13,8 +13,11 @@
     "@neutrinojs/chunk": "^8.3.0",
     "@neutrinojs/minify": "^8.3.0",
     "@tippy.js/react": "^2.2.2",
+    "autoprefixer": "^9.6.1",
     "compression-webpack-plugin": "^3.0.0",
     "papaparse": "^4.6.3",
+    "postcss-load-config": "^2.1.0",
+    "postcss-loader": "^3.0.0",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
@@ -28,5 +31,11 @@
     "@neutrinojs/airbnb": "^8.3.0",
     "@neutrinojs/react": "^8.3.0",
     "neutrino": "^8.3.0"
+  },
+  "postcss": {
+    "map": false,
+    "plugins": {
+      "autoprefixer": {}
+    }
   }
 }

@@ -38,10 +38,17 @@ module.exports = {
     ],
     // (neutrino) => {
     //   const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
-    //   //neutrino.config.output.filename('[name].js');
+    //   // neutrino.config.output.filename('[name].js');
     //   // neutrino.config
     //   //   .plugin('stats')
     //   //     .use(BundleAnalyzerPlugin);
     // },
+    (neutrino) => {
+      neutrino.config.module
+        .rule('postcss')
+          .test(/\.css$/)
+          .use('postcss')
+            .loader('postcss-loader');
+    },
   ]
 };
