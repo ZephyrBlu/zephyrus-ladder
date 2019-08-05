@@ -363,14 +363,14 @@ const WinrateTab = (props) => {
                             <XAxis dataKey="bin" />
                             <YAxis domain={[40, 60]} />
                             <CartesianGrid
-                                horizontal={false}
+                                // horizontal={false}
                                 vertical={false}
                             />
                             <Tooltip
                                 content={
                                     <CustomTooltip
                                         chart="winrate"
-                                        names={getActiveLines()}
+                                        matchups={getActiveLines()}
                                     />
                                 }
                                 cursor={{
@@ -402,13 +402,13 @@ const WinrateTab = (props) => {
 
                     <span className="all-controls">
                         <Tippy
-                            content={`Counts all matches played by ${currentLeague.grid} players`}
+                            content={`Counts all matches played by ${currentLeague.chart} players`}
                             arrow="true"
                         >
                             <h4>All</h4>
                         </Tippy>
                         <Tippy
-                            content={`Only counts matches played between 2 ${currentLeague.grid} players`}
+                            content={`Only counts matches played between 2 ${currentLeague.chart} players`}
                             arrow="true"
                         >
                             <h4>League</h4>

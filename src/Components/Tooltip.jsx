@@ -97,7 +97,22 @@ const CustomTooltip = (props) => {
                     RvR: 0,
                 };
 
-                props.names.forEach((name) => {
+                const raceColours = {
+                    All: 'hsl(120, 100%, 45%)',
+                    Protoss: 'hsl(51, 100%, 50%)',
+                    Random: 'hsl(198, 71%, 73%)',
+                    Terran: 'red',
+                    Zerg: 'hsl(282, 100%, 30%)',
+                };
+
+                const muConvert = {
+                    P: 'Protoss',
+                    T: 'Terran',
+                    Z: 'Zerg',
+                    R: 'Random',
+                };
+
+                props.matchups.forEach((name) => {
                     active[name] = 1;
                 });
 
@@ -108,13 +123,18 @@ const CustomTooltip = (props) => {
                     }
                 });
 
-                console.log(activePayload);
-
                 content = (
                     <Fragment>
-                        {props.names.map((name, index) => (
+                        {props.matchups.map((matchup, index) => (
                             <p key={index}>
-                                {`${name}: ${activePayload[index].value}%`}
+                                <span style={{ color: raceColours[`${muConvert[matchup[0]]}`] }}>
+                                    {matchup[0]}
+                                </span>
+                                v
+                                <span style={{ color: raceColours[`${muConvert[matchup[2]]}`] }}>
+                                    {matchup[2]}
+                                </span>
+                                {` ${activePayload[index].value}%`}
                             </p>
                         ))}
                     </Fragment>
